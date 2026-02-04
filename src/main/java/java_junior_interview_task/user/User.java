@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.UUID;
 
@@ -27,11 +28,9 @@ public class User {
     private String lastName;
 
     @NotBlank(message = "You must enter a phone number.")
-    @Pattern(
-            regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
-            message = "Email format is invalid"
-    )
+    @Pattern(regexp = "^\\+?[0-9]*$", message = "You must enter a valid phone number.")
     @Column(nullable = false, unique = true)
+    @Length(min = 7, max = 15)
     private String phoneNumber;
 
     @NotBlank(message = "You must enter an email address.")
