@@ -41,13 +41,14 @@ public class UserService {
     }
 
     // read one user
-    public UserDto getUserDto(int id) {
+    public UserDto getUser(int id) {
 
-        User byId = userRepository.getById(id);
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id: " + id));
 
-        return UserMapper.toUserDto(byId);
+        return UserMapper.toUserDto(user);
     }
 
+    // read all users (search by provided search term)
     public List<UserDto> getUserByTerm(String term) {
 
         List<UserDto> listUserDtoByTerm = new ArrayList<>();
@@ -62,7 +63,26 @@ public class UserService {
         return listUserDtoByTerm;
     }
 
-    // read all users (search by provided search term)
     // update user
+    @Transactional
+    public UserDto updateUserInfo(int id, UserDto userDto) {
+
+        User userToUpdate = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+
+        userToUpdate.setFirstName(userDto.getFirstName());
+        userToUpdate.setLastName(userDto.getLastName());
+        userToUpdate.setPhoneNumber(userDto.getPhoneNumber());
+        userToUpdate.setEmail(userDto.getEmail());
+
+        User savedUser = userRepository.save(userToUpdate);
+
+        return UserMapper.toUserDto(savedUser);
+    }
+
     // delete user
+    @Transactional
+    public void deleteUser(int id) {
+        userRepository.deleteById(id);
+    }
 }
