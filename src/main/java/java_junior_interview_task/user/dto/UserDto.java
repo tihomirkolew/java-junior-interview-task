@@ -1,4 +1,4 @@
-package java_junior_interview_task.dto;
+package java_junior_interview_task.user.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -11,11 +11,13 @@ import org.hibernate.validator.constraints.Length;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequest {
+public class UserDto {
 
+    @NotBlank
     @Size(min = 1, max = 50)
     private String firstName;
 
+    @NotBlank
     @Size(min = 1, max = 50)
     private String lastName;
 

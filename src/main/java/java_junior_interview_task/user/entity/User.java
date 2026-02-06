@@ -1,4 +1,4 @@
-package java_junior_interview_task.user;
+package java_junior_interview_task.user.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -18,8 +18,8 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(nullable = false)
     private String firstName;
