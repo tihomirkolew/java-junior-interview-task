@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Slf4j
 public class UserService {
@@ -38,6 +41,27 @@ public class UserService {
     }
 
     // read one user
+    public UserDto getUserDto(int id) {
+
+        User byId = userRepository.getById(id);
+
+        return UserMapper.toUserDto(byId);
+    }
+
+    public List<UserDto> getUserByTerm(String term) {
+
+        List<UserDto> listUserDtoByTerm = new ArrayList<>();
+
+        List<User> listByTerm = userRepository.
+                findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneNumberContainingIgnoreCase(term, term, term, term);
+
+        listByTerm.forEach(
+                user -> listUserDtoByTerm.add(UserMapper.toUserDto(user))
+        );
+
+        return listUserDtoByTerm;
+    }
+
     // read all users (search by provided search term)
     // update user
     // delete user

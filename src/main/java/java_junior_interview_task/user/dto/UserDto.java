@@ -13,17 +13,16 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 public class UserDto {
 
-    @NotBlank
-    @Size(min = 1, max = 50)
+    @NotBlank(message = "First name is required")
+    @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
     private String firstName;
 
-    @NotBlank
-    @Size(min = 1, max = 50)
+    @NotBlank(message = "Last name is required")
+    @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
     private String lastName;
 
-    @NotNull(message = "You must enter a phone number.")
-//    @Pattern(regexp = "^\\+?[0-9]*$", message = "You must enter a valid phone number")
-    @Length(min = 7, max = 15)
+    @NotBlank(message = "Phone number is required")
+    @Pattern(regexp = "^\\+?[0-9]{7,15}$", message = "Phone number must be 7-15 digits")
     private String phoneNumber;
 
     @NotNull(message = "You must enter an email address.")

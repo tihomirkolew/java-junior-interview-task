@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -35,11 +36,27 @@ public class UserController {
     }
 
     // read one user - only info for one user is returned based on an identifier
-//    public ResponseEntity<User> getUserById(@RequestParam UUID id) {
-//
-//    }
+
+    @GetMapping
+    @Operation(summary = "Get a single user")
+    public ResponseEntity<UserDto> getUserById(@RequestParam int id) {
+
+        UserDto getUserById = userService.getUserDto(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(getUserById);
+    }
 
     // read all users (search by provided search term)
+    @GetMapping("/search")
+    @Operation(summary = "Get users with provided term")
+    public ResponseEntity<List<UserDto>> getUsersByTerm(@RequestParam String term) {
+
+        List<UserDto> userListByTerm = userService.getUserByTerm(term);
+
+        // get all results
+        return ResponseEntity.status(HttpStatus.OK).body(userListByTerm);
+
+    }
 
     // update user
 
