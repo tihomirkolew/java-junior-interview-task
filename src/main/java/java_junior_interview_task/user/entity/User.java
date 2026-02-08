@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -26,6 +27,9 @@ public class User {
 
     @Column(nullable = false)
     private String lastName;
+
+    @Column(nullable = false)
+    private LocalDate dateOfBirth;
 
     @NotBlank(message = "You must enter a phone number.")
     @Pattern(regexp = "^\\+?[0-9]*$", message = "You must enter a valid phone number.")

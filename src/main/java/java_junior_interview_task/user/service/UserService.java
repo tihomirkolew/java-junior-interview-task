@@ -31,6 +31,7 @@ public class UserService {
         User user = User.builder()
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())
+                .dateOfBirth(userDto.getDateOfBirth())
                 .phoneNumber(userDto.getPhoneNumber())
                 .email(userDto.getEmail())
                 .build();
@@ -54,7 +55,7 @@ public class UserService {
         List<UserDto> listUserDtoByTerm = new ArrayList<>();
 
         List<User> listByTerm = userRepository.
-                findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneNumberContainingIgnoreCase(term, term, term, term);
+                findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneNumberContainingIgnoreCaseOrderByLastNameAscDateOfBirthAsc(term, term, term, term);
 
         listByTerm.forEach(
                 user -> listUserDtoByTerm.add(UserMapper.toUserDto(user))

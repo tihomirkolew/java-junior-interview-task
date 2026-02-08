@@ -12,6 +12,7 @@ public class UserMapper {
         return new UserDto(
                 user.getFirstName(),
                 user.getLastName(),
+                user.getDateOfBirth(),
                 user.getPhoneNumber(),
                 user.getEmail()
         );
