@@ -7,6 +7,10 @@ import java_junior_interview_task.user.mapper.UserMapper;
 import java_junior_interview_task.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -61,20 +65,19 @@ public class UserService {
     }
 
     // read all users (search by provided search term)
-    public List<UserDto> getUsersByTerm(String term) {
+    public Page<UserDto> getUsersByTerm(String term, int page, int size) {
 
-        List<UserDto> listUserDtoByTerm = new ArrayList<>();
+        Sort sort = Sort.by("lastName").and(Sort.by("dateOfBirth"));
+        Pageable pageable = PageRequest.of(page, size, sort);
 
-        List<User> listByTerm = userRepository.
-                findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneNumberContainingIgnoreCaseOrderByLastNameAscDateOfBirthAsc(
-                        term, term, term, term
-                );
-
-        listByTerm.forEach(
-                user -> listUserDtoByTerm.add(UserMapper.toUserDto(user))
+        Page<User> userPage = userRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneNumberContainingIgnoreCaseOrderByLastNameAscDateOfBirthAsc(
+                term, term, term, term,
+                pageable
         );
-        
-        return listUserDtoByTerm;
+
+        Page<UserDto> userDtoPage = userPage.map(UserMapper::toUserDto);
+
+        return userDtoPage;
     }
 
     // update user

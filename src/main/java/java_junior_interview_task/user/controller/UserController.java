@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import java_junior_interview_task.user.service.UserService;
 import java_junior_interview_task.user.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,11 +46,14 @@ public class UserController {
     }
 
     // read all users (search by provided search term)
-    @GetMapping("/search-by-term")
+    @GetMapping("/search")
     @Operation(summary = "Get users with provided term")
-    public ResponseEntity<List<UserDto>> getUsersByTerm(@RequestParam String term) {
+    public ResponseEntity<Page<UserDto>> getUsersByTerm(
+            @RequestParam String term,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
 
-        List<UserDto> userListByTerm = userService.getUsersByTerm(term);
+        Page<UserDto> userListByTerm = userService.getUsersByTerm(term, page, size);
 
         return ResponseEntity.ok(userListByTerm);
     }

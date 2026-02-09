@@ -1,0 +1,72 @@
+[
+  {
+    "firstName": "John",
+    "lastName": "Smith",
+    "dateOfBirth": "1990-03-15",
+    "phoneNumber": "+15551234567",
+    "email": "john.smith@example.com"
+  },
+  {
+    "firstName": "Emma",
+    "lastName": "Johnson",
+    "dateOfBirth": "1985-07-22",
+    "phoneNumber": "+15559876543",
+    "email": "emma.johnson@example.com"
+  },
+  {
+    "firstName": "Michael",
+    "lastName": "Williams",
+    "dateOfBirth": "1992-11-08",
+    "phoneNumber": "+15552345678",
+    "email": "michael.williams@example.com"
+  },
+  {
+    "firstName": "Sophia",
+    "lastName": "Brown",
+    "dateOfBirth": "1988-05-19",
+    "phoneNumber": "+15558765432",
+    "email": "sophia.brown@example.com"
+  },
+  {
+    "firstName": "James",
+    "lastName": "Davis",
+    "dateOfBirth": "1995-01-30",
+    "phoneNumber": "+15553456789",
+    "email": "james.davis@example.com"
+  },
+  {
+    "firstName": "Olivia",
+    "lastName": "Miller",
+    "dateOfBirth": "1991-09-12",
+    "phoneNumber": "+15557654321",
+    "email": "olivia.miller@example.com"
+  },
+  {
+    "firstName": "William",
+    "lastName": "Wilson",
+    "dateOfBirth": "1987-04-25",
+    "phoneNumber": "+15554567890",
+    "email": "william.wilson@example.com"
+  },
+  {
+    "firstName": "Ava",
+    "lastName": "Moore",
+    "dateOfBirth": "1993-12-03",
+    "phoneNumber": "+15556543210",
+    "email": "ava.moore@example.com"
+  },
+  {
+    "firstName": "Benjamin",
+    "lastName": "Taylor",
+    "dateOfBirth": "1989-08-17",
+    "phoneNumber": "+15555678901",
+    "email": "benjamin.taylor@example.com"
+  },
+  {
+    "firstName": "Isabella",
+    "lastName": "Anderson",
+    "dateOfBirth": "1994-02-28",
+    "phoneNumber": "+15555432109",
+    "email": "isabella.anderson@example.com"
+  }
+]
