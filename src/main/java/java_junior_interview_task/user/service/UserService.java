@@ -49,18 +49,31 @@ public class UserService {
         return UserMapper.toUserDto(user);
     }
 
+    public List<UserDto> getAllUsers() {
+
+        List<User> userList = userRepository.findAll();
+
+        List<UserDto> userDtoList = new ArrayList<>();
+
+        userList.forEach(user -> userDtoList.add(UserMapper.toUserDto(user)));
+
+        return userDtoList;
+    }
+
     // read all users (search by provided search term)
-    public List<UserDto> getUserByTerm(String term) {
+    public List<UserDto> getUsersByTerm(String term) {
 
         List<UserDto> listUserDtoByTerm = new ArrayList<>();
 
         List<User> listByTerm = userRepository.
-                findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneNumberContainingIgnoreCaseOrderByLastNameAscDateOfBirthAsc(term, term, term, term);
+                findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrPhoneNumberContainingIgnoreCaseOrderByLastNameAscDateOfBirthAsc(
+                        term, term, term, term
+                );
 
         listByTerm.forEach(
                 user -> listUserDtoByTerm.add(UserMapper.toUserDto(user))
         );
-
+        
         return listUserDtoByTerm;
     }
 

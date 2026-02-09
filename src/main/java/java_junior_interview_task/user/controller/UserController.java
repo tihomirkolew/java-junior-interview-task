@@ -45,13 +45,23 @@ public class UserController {
     }
 
     // read all users (search by provided search term)
-    @GetMapping("/search")
+    @GetMapping("/search-by-term")
     @Operation(summary = "Get users with provided term")
     public ResponseEntity<List<UserDto>> getUsersByTerm(@RequestParam String term) {
 
-        List<UserDto> userListByTerm = userService.getUserByTerm(term);
+        List<UserDto> userListByTerm = userService.getUsersByTerm(term);
 
         return ResponseEntity.ok(userListByTerm);
+    }
+
+    // read all users (search by provided search term)
+    @GetMapping
+    @Operation(summary = "Get all users")
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+
+        List<UserDto> userList = userService.getAllUsers();
+
+        return ResponseEntity.ok(userList);
     }
 
     // update user
