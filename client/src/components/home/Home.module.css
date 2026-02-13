@@ -1,0 +1,20 @@
+.homeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16em;
+    max-width: 800px;
+}
+
+h1 {
+    color: #777777;
+    align-self: center;
+    font-size: 3.1em;
+}
+
+p {
+    color: #7c7c7c;
+    font-size: 1.4em;
+    line-height: 1.5em;
+}

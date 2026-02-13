@@ -1,28 +1,29 @@
+import { Link } from 'react-router';
 import styles from './SideBar.module.css';
 
 export default function SideBar() {
     return (
         <div className={styles.sidebar}>
             <div>
-                <h1 className={styles.title}>User Management</h1>
+                <Link to="/" className={styles.title}>User Management</Link>
 
                 <nav className={styles.nav}>
                     <ul>
-                        <li><a href="">Create a user</a></li>
-                        <li><a href="">Read a user</a></li>
-                        <li><a href="">Read all users</a></li>
-                        <li><a href="">Read users by term</a></li>
-                        <li><a href="">Edit user</a></li>
-                        <li><a href="">Delete user</a></li>
+                        <li><Link to="">Create user</Link></li>
+                        <li><Link to="">User details</Link></li>
+                        <li><Link to="">All users</Link></li>
+                        <li><Link to="">Search users</Link></li>
+                        <li><Link to="">Edit user</Link></li>
+                        <li><Link to="">Delete user</Link></li>
                     </ul>
                 </nav>
             </div>
             <nav className={styles.nav}>
             <hr className={styles.divider} />
                 <ul>
-                    <li><a href="">Login</a></li>
-                    <li><a href="">Register</a></li>
-                    <li><a href="">Logout</a></li>
+                    <li><Link to="">Login</Link></li>
+                    <li><Link to="">Register</Link></li>
+                    <li><Link to="">Logout</Link></li>
                 </ul>
             </nav>
         </div>
