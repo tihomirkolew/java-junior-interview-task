@@ -8,7 +8,6 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -41,5 +40,9 @@ public class User {
     @Email(message = "You must enter a valid email.")
     @Column(nullable = false, unique = true)
     private String email;
+
+    @NotBlank(message = "Password is required")
+    @Column(nullable = false)
+    private String password;
 
 }
