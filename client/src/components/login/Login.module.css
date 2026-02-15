@@ -1,0 +1,28 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10em;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 300px;
+    padding-bottom: 1em;
+}
+
+.inputContainer label {
+    font-size: 18px;
+    color: #333;
+    align-self: flex-start;
+}
+
+.inputContainer input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

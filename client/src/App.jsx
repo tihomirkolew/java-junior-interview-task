@@ -3,6 +3,13 @@ import './App.css'
 import SideBar from './components/sideBar/SideBar'
 import Home from './components/home/Home'
 import UserDetails from './components/UserDetails/UserDetails'
+import CreateUser from './components/createUser/CreateUser'
+import UserList from './components/userList/UserList'
+import UserSearch from './components/searchUsers/SearchUsers'
+import EditUser from './components/editUser/EditUser'
+import Login from './components/login/Login'
+import Register from './components/register/Register'
+import Logout from './components/logout/Logout'
 
 function App() {
 
@@ -13,12 +20,14 @@ function App() {
       <div className='content'>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path="/create" element={<h1>Create user</h1>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/create" element={<CreateUser />} />
           <Route path="/details" element={<UserDetails />} />
-          <Route path="/list" element={<h1>All users</h1>} />
-          <Route path="/search" element={<h1>Search users</h1>} />
-          <Route path="/edit" element={<h1>Edit user</h1>} />
-          <Route path="/delete" element={<h1>Delete user</h1>} />
+          <Route path="/list" element={<UserList />} />
+          <Route path="/search" element={<UserSearch />} />
+          <Route path="/edit" element={<EditUser />} />
         </Routes>
       </div>
     </>
