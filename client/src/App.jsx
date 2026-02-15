@@ -10,6 +10,8 @@ import EditUser from './components/editUser/EditUser'
 import Login from './components/login/Login'
 import Register from './components/register/Register'
 import Logout from './components/logout/Logout'
+import ProtectedRoute from './components/protectedRoutes/ProtectedRoute'
+import GuestRoute from './components/protectedRoutes/GuestRoute'
 
 function App() {
 
@@ -20,14 +22,21 @@ function App() {
       <div className='content'>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/create" element={<CreateUser />} />
-          <Route path="/details" element={<UserDetails />} />
-          <Route path="/list" element={<UserList />} />
-          <Route path="/search" element={<UserSearch />} />
-          <Route path="/edit" element={<EditUser />} />
+
+          <Route element={<GuestRoute />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/create" element={<CreateUser />} />
+            <Route path="/details" element={<UserDetails />} />
+            <Route path="/list" element={<UserList />} />
+            <Route path="/search" element={<UserSearch />} />
+            <Route path="/edit" element={<EditUser />} />
+            <Route path="/logout" element={<Logout />} />
+          </Route>
+
         </Routes>
       </div>
     </>
