@@ -2,6 +2,7 @@ package java_junior_interview_task.user.controller;
 
 import java_junior_interview_task.user.dto.LoginRequest;
 import java_junior_interview_task.user.dto.RegisterRequest;
+import java_junior_interview_task.user.entity.User;
 import java_junior_interview_task.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,11 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        return ResponseEntity.ok("Login successful");
+        try {
+            User user = authService.login(request);
+            return ResponseEntity.ok(user);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import styles from '../login/Login.module.css'
+import { useNavigate } from 'react-router';
 
 export default function Register() {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -20,35 +23,36 @@ export default function Register() {
     }
 
     const onSubmit = async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    await fetch('http://localhost:8086/api/auth/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-        .then(res => {
-            if (res.ok) {
-                const contentType = res.headers.get('content-type');
-                if (contentType && contentType.includes('application/json')) {
-                    return res.json();
-                } else {
-                    return res.text();
+        await fetch('http://localhost:8086/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(res => {
+                if (res.ok) {
+                    const contentType = res.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
+                        return res.json();
+                    } else {
+                        return res.text();
+                    }
                 }
-            }
-            throw new Error('Registration failed');
-        })
-        .then(data => {
-            console.log(data);
-        })
-        .catch(err => {
-            console.log(err);
-        });
-}
+                throw new Error('Registration failed');
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
 
 
+        navigate('/login');
+    }
 
     return (
         <>

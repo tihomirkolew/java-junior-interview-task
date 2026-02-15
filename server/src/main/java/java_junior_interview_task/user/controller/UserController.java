@@ -25,7 +25,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    // create user
     @PostMapping
     @Operation(summary = "Create user")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
@@ -35,7 +34,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
-    // read one user - only info for one user is returned based on an identifier
     @GetMapping("/{id}")
     @Operation(summary = "Get a single user")
     public ResponseEntity<UserDto> getUserById(@PathVariable int id) {
@@ -45,7 +43,6 @@ public class UserController {
         return ResponseEntity.ok(getUserById);
     }
 
-    // read all users (search by provided search term)
     @GetMapping("/search")
     @Operation(summary = "Get users with provided term")
     public ResponseEntity<Page<UserDto>> getUsersByTerm(
@@ -58,7 +55,6 @@ public class UserController {
         return ResponseEntity.ok(userListByTerm);
     }
 
-    // read all users (search by provided search term)
     @GetMapping
     @Operation(summary = "Get all users")
     public ResponseEntity<List<UserDto>> getAllUsers() {
@@ -68,7 +64,6 @@ public class UserController {
         return ResponseEntity.ok(userList);
     }
 
-    // update user
     @PutMapping("/{id}")
     @Operation(summary = "Update user")
     public ResponseEntity<UserDto> updateUser(@PathVariable int id, @Valid @RequestBody UserDto userDto) {
@@ -78,7 +73,6 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    // delete user
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete user")
     public ResponseEntity<Void> deleteUser(@PathVariable int id) {

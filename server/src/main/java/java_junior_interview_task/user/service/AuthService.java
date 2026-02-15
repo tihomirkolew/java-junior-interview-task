@@ -1,5 +1,6 @@
 package java_junior_interview_task.user.service;
 
+import java_junior_interview_task.user.dto.LoginRequest;
 import java_junior_interview_task.user.dto.RegisterRequest;
 import java_junior_interview_task.user.entity.User;
 import java_junior_interview_task.user.repository.UserRepository;
@@ -29,5 +30,16 @@ public class AuthService {
                 .build();
 
         return userRepository.save(user);
+    }
+
+    public User login(LoginRequest request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Invalid email or password");
+        }
+
+        return user;
     }
 }
