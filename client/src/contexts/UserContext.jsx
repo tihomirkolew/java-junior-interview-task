@@ -13,6 +13,7 @@ const UserContext = createContext({
         confirmPassword: '',
     },
     loginHandler() { },
+    setUser() { },
 });
 
 export function UserProvider({ children }) {
@@ -60,6 +61,7 @@ export function UserProvider({ children }) {
         isAuthenticated: !!user,
         user,
         loginHandler,
+        setUser
     };
 
     return (

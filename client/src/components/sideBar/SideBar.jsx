@@ -3,7 +3,7 @@ import styles from './SideBar.module.css';
 import { useUserContext } from '../../contexts/UserContext';
 
 export default function SideBar() {
-    const { isAuthenticated } = useUserContext();
+    const { user, isAuthenticated } = useUserContext();
 
     return (
         <div className={styles.sidebar}>
@@ -37,6 +37,7 @@ export default function SideBar() {
                     {isAuthenticated && (
                         <li><Link to="/logout">Logout</Link></li>
                     )}
+                    <span>Logged in with: {user?.email}</span>
                 </ul>
             </nav>
         </div>

@@ -13,6 +13,8 @@ export default function Login() {
         password: ''
     });
 
+    // validation can be added here
+
     const onSubmit = async (е) => {
         е.preventDefault();
         try {
