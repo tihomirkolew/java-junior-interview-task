@@ -40,10 +40,10 @@ export function UserProvider({ children }) {
 
                 if (contentType && contentType.includes('application/json')) {
                     const data = await response.json();
-                    setUser(data);
+                    setUser({ ...data, plainPassword: password });
                 } else {
                     error = await response.text();
-                    setUser({ email });
+                    setUser({ email, plainPassword: password });
                 }
             } else {
                 error = await response.text();

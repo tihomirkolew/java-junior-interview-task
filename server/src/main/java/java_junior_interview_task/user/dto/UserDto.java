@@ -33,4 +33,7 @@ public class UserDto {
     @NotNull(message = "You must enter an email address.")
     @Email(message = "You must enter a valid email.")
     private String email;
+
+    @NotNull
+    private String password;
 }

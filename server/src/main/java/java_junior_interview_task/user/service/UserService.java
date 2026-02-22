@@ -38,6 +38,7 @@ public class UserService {
                 .dateOfBirth(userDto.getDateOfBirth())
                 .phoneNumber(userDto.getPhoneNumber())
                 .email(userDto.getEmail())
+                .password(userDto.getPassword())
                 .build();
 
         User savedUser = userRepository.save(user);

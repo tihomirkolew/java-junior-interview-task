@@ -1,16 +1,20 @@
 package java_junior_interview_task.user.service;
 
+import java_junior_interview_task.security.Authentication;
 import java_junior_interview_task.user.dto.LoginRequest;
 import java_junior_interview_task.user.dto.RegisterRequest;
 import java_junior_interview_task.user.entity.User;
 import java_junior_interview_task.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -41,5 +45,16 @@ public class AuthService {
         }
 
         return user;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
+
+        return new Authentication(
+                user.getId(),
+                user.getEmail(),
+                user.getPassword()
+        );
     }
 }

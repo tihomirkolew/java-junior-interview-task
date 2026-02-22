@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useUserContext } from '../../contexts/UserContext';
 import styles from './Login.module.css'
 import { useState } from 'react';
@@ -58,6 +58,7 @@ export default function Login() {
                         onChange={changeHandler}
                     />
                 </div>
+                <p><Link to="/register">Don't have an account? Register here.</Link></p>
                 <button type="submit">Login</button>
             </form>
         </div>

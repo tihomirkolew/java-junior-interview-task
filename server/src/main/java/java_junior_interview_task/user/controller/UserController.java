@@ -25,7 +25,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     @Operation(summary = "Create user")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
 

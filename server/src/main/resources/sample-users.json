@@ -4,69 +4,79 @@
     "lastName": "Smith",
     "dateOfBirth": "1990-03-15",
     "phoneNumber": "+15551234567",
-    "email": "john.smith@example.com"
+    "email": "john.smith@example.com",
+    "password": "123123123"
   },
   {
     "firstName": "Emma",
     "lastName": "Johnson",
     "dateOfBirth": "1985-07-22",
     "phoneNumber": "+15559876543",
-    "email": "emma.johnson@example.com"
+    "email": "emma.johnson@example.com",
+    "password": "123123123"
   },
   {
     "firstName": "Michael",
     "lastName": "Williams",
     "dateOfBirth": "1992-11-08",
     "phoneNumber": "+15552345678",
-    "email": "michael.williams@example.com"
+    "email": "michael.williams@example.com",
+    "password": "123123123"
   },
   {
     "firstName": "Sophia",
     "lastName": "Brown",
     "dateOfBirth": "1988-05-19",
     "phoneNumber": "+15558765432",
-    "email": "sophia.brown@example.com"
+    "email": "sophia.brown@example.com",
+    "password": "123123123"
   },
   {
     "firstName": "James",
     "lastName": "Davis",
     "dateOfBirth": "1995-01-30",
     "phoneNumber": "+15553456789",
-    "email": "james.davis@example.com"
+    "email": "james.davis@example.com",
+    "password": "123123123"
   },
   {
     "firstName": "Olivia",
     "lastName": "Miller",
     "dateOfBirth": "1991-09-12",
     "phoneNumber": "+15557654321",
-    "email": "olivia.miller@example.com"
+    "email": "olivia.miller@example.com",
+    "password": "123123123"
   },
   {
     "firstName": "William",
     "lastName": "Wilson",
     "dateOfBirth": "1987-04-25",
     "phoneNumber": "+15554567890",
-    "email": "william.wilson@example.com"
+    "email": "william.wilson@example.com",
+    "password": "123123123"
   },
   {
     "firstName": "Ava",
     "lastName": "Moore",
     "dateOfBirth": "1993-12-03",
     "phoneNumber": "+15556543210",
-    "email": "ava.moore@example.com"
+    "email": "ava.moore@example.com",
+    "password": "123123123"
   },
   {
     "firstName": "Benjamin",
     "lastName": "Taylor",
     "dateOfBirth": "1989-08-17",
     "phoneNumber": "+15555678901",
-    "email": "benjamin.taylor@example.com"
+    "email": "benjamin.taylor@example.com",
+    "password": "123123123"
   },
   {
     "firstName": "Isabella",
     "lastName": "Anderson",
     "dateOfBirth": "1994-02-28",
     "phoneNumber": "+15555432109",
-    "email": "isabella.anderson@example.com"
+    "email": "isabella.anderson@example.com",
+    "password": "123123123"
   }
 ]
