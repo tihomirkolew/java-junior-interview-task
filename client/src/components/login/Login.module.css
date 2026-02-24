@@ -30,3 +30,9 @@ p {
     margin: 0 0 1em 0;
     font-size: 14px;
 }
+
+.textDanger {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+}

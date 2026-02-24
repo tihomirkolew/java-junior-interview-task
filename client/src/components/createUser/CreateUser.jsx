@@ -48,6 +48,15 @@ export default function CreateUser() {
             })
             .then(data => {
                 console.log(data);
+
+                setFormData({
+                    firstName: '',
+                    lastName: '',
+                    dateOfBirth: '',
+                    phoneNumber: '',
+                    email: '',
+                    password: ''
+                });
             })
             .catch(err => {
                 console.log(err);

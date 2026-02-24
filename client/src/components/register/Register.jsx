@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 export default function Register() {
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
+    const [values, setValues] = useState({
         firstName: '',
         lastName: '',
         dateOfBirth: '',
@@ -14,23 +14,68 @@ export default function Register() {
         password: '',
         confirmPassword: ''
     });
+    const [errors, setErrors] = useState({});
+
+    const validateForm = (values) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneNumberRegex = /^\\+?[0-9]{7,15}$/;
+
+        if (!values.firstName) {
+            return { firstName: 'First name is required!' };
+        }
+
+        if (!values.lastName) {
+            return { lastName: 'Last name is required!' };
+        }
+
+        if (!values.dateOfBirth) {
+            return { dateOfBirth: 'Date of birth is required!' };
+        }
+
+        if (!values.phoneNumber || !phoneNumberRegex.test(values.phoneNumber)) {
+            return { phoneNumber: 'Valid phone number is required!' };
+        }
+
+        if (!emailRegex.test(values.email)) {
+            return { email: 'Invalid email format' };
+        }
+
+        if (values.password !== values.confirmPassword) {
+            return { confirmPassword: 'Passwords do not match' };
+        }
+
+        return {};
+    }
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
+        setValues(state => ({
+            ...state,
             [e.target.name]: e.target.value
-        });
+        }));
+
+        if (errors[e.target.name]) {
+            setErrors(state => ({
+                ...state,
+                [e.target.name]: null
+            }));
+        }
     }
 
     const onSubmit = async (e) => {
         e.preventDefault();
+
+        const validationErrors = validateForm(values);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
 
         await fetch('http://localhost:8086/api/auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(values)
         })
             .then(res => {
                 if (res.ok) {
@@ -47,9 +92,8 @@ export default function Register() {
                 console.log(data);
             })
             .catch(err => {
-                console.log(err);
+                setErrors({ form: err.message });
             });
-
 
         navigate('/login');
     }
@@ -69,74 +113,81 @@ export default function Register() {
                         <input
                             type="text"
                             id="firstName"
-                            value={formData.firstName}
+                            value={values.firstName}
                             onChange={handleChange}
                             name="firstName"
                         />
+                        {errors.firstName && <p className={styles.textDanger}>{errors.firstName}</p>}
                     </div>
                     <div className={styles.inputContainer}>
                         <label htmlFor="lastName">Last name</label>
                         <input
                             type="text"
                             id="lastName"
-                            value={formData.lastName}
+                            value={values.lastName}
                             onChange={handleChange}
                             name="lastName"
                         />
+                        {errors.lastName && <p className={styles.textDanger}>{errors.lastName}</p>}
                     </div>
                     <div className={styles.inputContainer}>
                         <label htmlFor="dateOfBirth">Date of birth</label>
                         <input
                             type="date"
                             id="dateOfBirth"
-                            value={formData.dateOfBirth}
+                            value={values.dateOfBirth}
                             onChange={handleChange}
                             name="dateOfBirth"
                         />
+                        {errors.dateOfBirth && <p className={styles.textDanger}>{errors.dateOfBirth}</p>}
                     </div>
                     <div className={styles.inputContainer}>
                         <label htmlFor="phoneNumber">Phone number</label>
                         <input
                             type="tel"
                             id="phoneNumber"
-                            value={formData.phoneNumber}
+                            value={values.phoneNumber}
                             onChange={handleChange}
                             name="phoneNumber"
                             autoComplete="tel"
                         />
+                        {errors.phoneNumber && <p className={styles.textDanger}>{errors.phoneNumber}</p>}
                     </div>
                     <div className={styles.inputContainer}>
                         <label htmlFor="email">Email</label>
                         <input
                             type="email"
                             id="email"
-                            value={formData.email}
+                            value={values.email}
                             onChange={handleChange}
                             autoComplete="new-email"
                             name="email"
                         />
+                        {errors.email && <p className={styles.textDanger}>{errors.email}</p>}
                     </div>
                     <div className={styles.inputContainer}>
                         <label htmlFor="password">Password</label>
                         <input
                             type="password"
                             id="password"
-                            value={formData.password}
+                            value={values.password}
                             onChange={handleChange}
                             autoComplete="new-password"
                             name="password"
                         />
+                        {errors.password && <p className={styles.textDanger}>{errors.password}</p>}
                     </div>
                     <div className={styles.inputContainer}>
                         <label htmlFor="confirmPassword">Confirm Password</label>
                         <input
                             type="password"
                             id="confirmPassword"
-                            value={formData.confirmPassword}
+                            value={values.confirmPassword}
                             onChange={handleChange}
                             autoComplete="new-password"
                             name="confirmPassword"
                         />
+                        {errors.confirmPassword && <p className={styles.textDanger}>{errors.confirmPassword}</p>}
                     </div>
                     <button type="submit">Register</button>
                 </form>

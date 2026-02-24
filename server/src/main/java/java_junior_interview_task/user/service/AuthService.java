@@ -21,7 +21,7 @@ public class AuthService implements UserDetailsService {
 
     public User register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            throw new RuntimeException("Email already exists!");
         }
 
         User user = User.builder()
@@ -38,10 +38,10 @@ public class AuthService implements UserDetailsService {
 
     public User login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+                .orElseThrow(() -> new RuntimeException("Invalid email!"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid email or password");
+            throw new RuntimeException("Invalid password!");
         }
 
         return user;

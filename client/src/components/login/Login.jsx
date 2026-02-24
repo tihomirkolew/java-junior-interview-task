@@ -21,7 +21,7 @@ export default function Login() {
             await loginHandler(formData.email, formData.password);
             navigate('/');
         } catch (error) {
-            alert('Login failed: ' + error.message);
+            alert(error.message);
         }
     }
 
