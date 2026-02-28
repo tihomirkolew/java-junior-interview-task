@@ -1,5 +1,7 @@
 package java_junior_interview_task.user.service;
 
+import java_junior_interview_task.exception.EmailDuplicateException;
+import java_junior_interview_task.exception.PhoneNumberDuplicateException;
 import java_junior_interview_task.security.Authentication;
 import java_junior_interview_task.user.dto.LoginRequest;
 import java_junior_interview_task.user.dto.RegisterRequest;
@@ -12,6 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService implements UserDetailsService {
@@ -19,28 +23,32 @@ public class AuthService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public User register(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists!");
+    public User register(RegisterRequest registerRequest) {
+        if (userRepository.existsByEmail(registerRequest.getEmail())) {
+            throw new EmailDuplicateException("Email already in use.");
+        }
+
+        if (userRepository.existsByPhoneNumber(registerRequest.getPhoneNumber())) {
+            throw new PhoneNumberDuplicateException("Phone number already in use.");
         }
 
         User user = User.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .dateOfBirth(request.getDateOfBirth())
-                .phoneNumber(request.getPhoneNumber())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
+                .firstName(registerRequest.getFirstName())
+                .lastName(registerRequest.getLastName())
+                .dateOfBirth(registerRequest.getDateOfBirth())
+                .phoneNumber(registerRequest.getPhoneNumber())
+                .email(registerRequest.getEmail())
+                .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .build();
 
         return userRepository.save(user);
     }
 
-    public User login(LoginRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
+    public User login(LoginRequest loginRequest) {
+        User user = userRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new RuntimeException("Invalid email!"));
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid password!");
         }
 

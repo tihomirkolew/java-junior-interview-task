@@ -18,7 +18,7 @@ export default function Register() {
 
     const validateForm = (values) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const phoneNumberRegex = /^\\+?[0-9]{7,15}$/;
+        const phoneNumberRegex = /^\+?[0-9]{7,15}$/;
 
         if (!values.firstName) {
             return { firstName: 'First name is required!' };
@@ -37,11 +37,19 @@ export default function Register() {
         }
 
         if (!emailRegex.test(values.email)) {
-            return { email: 'Invalid email format' };
+            return { email: 'Valid email is required!' };
+        }
+
+        if (!values.password) {
+            return { password: 'Password is required!' };
+        }
+
+        if (values.password.length < 6) {
+            return { password: 'Password must be at least 6 characters!' };
         }
 
         if (values.password !== values.confirmPassword) {
-            return { confirmPassword: 'Passwords do not match' };
+            return { confirmPassword: 'Passwords do not match!' };
         }
 
         return {};
@@ -70,128 +78,133 @@ export default function Register() {
             return;
         }
 
-        await fetch('http://localhost:8086/api/auth/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(values)
-        })
-            .then(res => {
-                if (res.ok) {
-                    const contentType = res.headers.get('content-type');
-                    if (contentType && contentType.includes('application/json')) {
-                        return res.json();
-                    } else {
-                        return res.text();
-                    }
-                }
-                throw new Error('Registration failed');
-            })
-            .then(data => {
-                console.log(data);
-            })
-            .catch(err => {
-                setErrors({ form: err.message });
+        try {
+            const res = await fetch('http://localhost:8086/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(values)
             });
 
-        navigate('/login');
+            if (!res.ok) {
+                const errorData = await res.json();
+                setErrors(errorData);
+                
+                return;
+            }
+
+            const data = await res.json();
+            alert('Registration successful!');
+
+            navigate('/login');
+
+        } catch (err) {
+            alert(err.message);
+        }
     }
 
-    return (
-        <>
-            <div className={styles.formContainer}>
-                <h1>Register</h1>
-                <form
-                    id="register-form"
-                    className={styles.form}
-                    method="POST"
-                    onSubmit={onSubmit}
-                >
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="firstName">First name</label>
-                        <input
-                            type="text"
-                            id="firstName"
-                            value={values.firstName}
-                            onChange={handleChange}
-                            name="firstName"
-                        />
-                        {errors.firstName && <p className={styles.textDanger}>{errors.firstName}</p>}
-                    </div>
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="lastName">Last name</label>
-                        <input
-                            type="text"
-                            id="lastName"
-                            value={values.lastName}
-                            onChange={handleChange}
-                            name="lastName"
-                        />
-                        {errors.lastName && <p className={styles.textDanger}>{errors.lastName}</p>}
-                    </div>
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="dateOfBirth">Date of birth</label>
-                        <input
-                            type="date"
-                            id="dateOfBirth"
-                            value={values.dateOfBirth}
-                            onChange={handleChange}
-                            name="dateOfBirth"
-                        />
-                        {errors.dateOfBirth && <p className={styles.textDanger}>{errors.dateOfBirth}</p>}
-                    </div>
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="phoneNumber">Phone number</label>
-                        <input
-                            type="tel"
-                            id="phoneNumber"
-                            value={values.phoneNumber}
-                            onChange={handleChange}
-                            name="phoneNumber"
-                            autoComplete="tel"
-                        />
-                        {errors.phoneNumber && <p className={styles.textDanger}>{errors.phoneNumber}</p>}
-                    </div>
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={values.email}
-                            onChange={handleChange}
-                            autoComplete="new-email"
-                            name="email"
-                        />
-                        {errors.email && <p className={styles.textDanger}>{errors.email}</p>}
-                    </div>
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={values.password}
-                            onChange={handleChange}
-                            autoComplete="new-password"
-                            name="password"
-                        />
-                        {errors.password && <p className={styles.textDanger}>{errors.password}</p>}
-                    </div>
-                    <div className={styles.inputContainer}>
-                        <label htmlFor="confirmPassword">Confirm Password</label>
-                        <input
-                            type="password"
-                            id="confirmPassword"
-                            value={values.confirmPassword}
-                            onChange={handleChange}
-                            autoComplete="new-password"
-                            name="confirmPassword"
-                        />
-                        {errors.confirmPassword && <p className={styles.textDanger}>{errors.confirmPassword}</p>}
-                    </div>
-                    <button type="submit">Register</button>
-                </form>
-            </div>
-        </>
-    );
-}
+        return (
+            <>
+                <div className={styles.formContainer}>
+                    <h1>Register</h1>
+                    <form
+                        id="register-form"
+                        className={styles.form}
+                        method="POST"
+                        onSubmit={onSubmit}
+                    >
+                        <div className={styles.inputContainer}>
+                            <label htmlFor="firstName">First name</label>
+                            <input
+                                type="text"
+                                id="firstName"
+                                value={values.firstName}
+                                onChange={handleChange}
+                                name="firstName"
+                                noValidate
+                            />
+                            {errors.firstName && <p className={styles.textDanger}>{errors.firstName}</p>}
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <label htmlFor="lastName">Last name</label>
+                            <input
+                                type="text"
+                                id="lastName"
+                                value={values.lastName}
+                                onChange={handleChange}
+                                name="lastName"
+                                noValidate
+                            />
+                            {errors.lastName && <p className={styles.textDanger}>{errors.lastName}</p>}
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <label htmlFor="dateOfBirth">Date of birth</label>
+                            <input
+                                type="date"
+                                id="dateOfBirth"
+                                value={values.dateOfBirth}
+                                onChange={handleChange}
+                                name="dateOfBirth"
+                                noValidate
+                            />
+                            {errors.dateOfBirth && <p className={styles.textDanger}>{errors.dateOfBirth}</p>}
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <label htmlFor="phoneNumber">Phone number</label>
+                            <input
+                                type="tel"
+                                id="phoneNumber"
+                                value={values.phoneNumber}
+                                onChange={handleChange}
+                                name="phoneNumber"
+                                autoComplete="tel"
+                                noValidate
+                            />
+                            {errors.phoneNumber && <p className={styles.textDanger}>{errors.phoneNumber}</p>}
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                value={values.email}
+                                onChange={handleChange}
+                                autoComplete="new-email"
+                                name="email"
+                                noValidate
+                            />
+                            {errors.email && <p className={styles.textDanger}>{errors.email}</p>}
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <label htmlFor="password">Password</label>
+                            <input
+                                type="password"
+                                id="password"
+                                value={values.password}
+                                onChange={handleChange}
+                                autoComplete="new-password"
+                                name="password"
+                                noValidate
+                            />
+                            {errors.password && <p className={styles.textDanger}>{errors.password}</p>}
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <label htmlFor="confirmPassword">Confirm Password</label>
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                value={values.confirmPassword}
+                                onChange={handleChange}
+                                autoComplete="new-password"
+                                name="confirmPassword"
+                                noValidate
+                            />
+                            {errors.confirmPassword && <p className={styles.textDanger}>{errors.confirmPassword}</p>}
+                        </div>
+                        <button type="submit">Register</button>
+                    </form>
+                </div>
+            </>
+        );
+    }

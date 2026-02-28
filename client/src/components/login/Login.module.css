@@ -3,36 +3,54 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-bottom: 10em;
+}
+
+.formContainer h1 {
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+.formContainer form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
 }
 
 .inputContainer {
     display: flex;
     flex-direction: column;
-    width: 300px;
-    padding-bottom: 1em;
+    width: 350px;
 }
 
 .inputContainer label {
-    font-size: 16px;
+    font-size: 22px;
     color: #333;
     align-self: flex-start;
+    padding:0 0 4px 2px;
 }
 
 .inputContainer input {
-    padding: 8px;
-    font-size: 16px;
+    padding: 12px;
+    font-size: 22px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-p {
-    margin: 0 0 1em 0;
-    font-size: 14px;
+.registerLink {
+    margin: 0 0 0 0;
+    font-size: 18px;
 }
 
 .textDanger {
     color: red;
     font-size: 14px;
     margin-top: 4px;
+    margin-bottom: 0;
+}
+
+form button {
+    font-size: 20px;
+    padding: 8px 24px 10px 24px;
+    margin-top: 1.5em;
 }

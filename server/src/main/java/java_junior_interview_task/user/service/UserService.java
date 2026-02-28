@@ -1,6 +1,8 @@
 package java_junior_interview_task.user.service;
 
 import jakarta.transaction.Transactional;
+import java_junior_interview_task.exception.EmailDuplicateException;
+import java_junior_interview_task.exception.PhoneNumberDuplicateException;
 import java_junior_interview_task.user.dto.UserDto;
 import java_junior_interview_task.user.entity.User;
 import java_junior_interview_task.user.mapper.UserMapper;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -34,6 +37,14 @@ public class UserService {
 
     @Transactional
     public UserDto createUser(UserDto userDto) {
+
+        if (userRepository.existsByEmail(userDto.getEmail())) {
+            throw new EmailDuplicateException("User with email " + userDto.getEmail() + " already exists.");
+        }
+
+        if (userRepository.existsByPhoneNumber(userDto.getPhoneNumber())) {
+            throw new PhoneNumberDuplicateException("User with phone number " + userDto.getPhoneNumber() + " already exists.");
+        }
 
         User user = User.builder()
                 .firstName(userDto.getFirstName())

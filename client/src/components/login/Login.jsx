@@ -58,7 +58,7 @@ export default function Login() {
                         onChange={changeHandler}
                     />
                 </div>
-                <p><Link to="/register">Don't have an account? Register here.</Link></p>
+                <p className={styles.registerLink}><Link to="/register">Don't have an account? Register here.</Link></p>
                 <button type="submit">Login</button>
             </form>
         </div>
