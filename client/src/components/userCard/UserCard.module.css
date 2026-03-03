@@ -1,0 +1,41 @@
+.userInfoContainer {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 2em 2.5em 2em 2.5em;
+    width: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2em;
+    text-align: start;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1em;
+    width: 100%;
+}
+
+.fullName {
+    font-size: 2em;
+    color: #213547;
+    margin: 0;
+}
+
+.userInfoContainer p {
+    font-size: 1.2em;
+    margin: 0;
+    line-height: 1.6em;
+    text-align: start;
+}
+
+.userInfoContainer .ownProfile {
+    color: rgb(255, 84, 84);
+    font-size: 12px;
+    align-self: flex-end;
+    font-style: italic;
+    font-weight: bold;
+}

@@ -1,17 +1,33 @@
+import { useUserContext } from "../../contexts/UserContext";
+import styles from "./UserCard.module.css";
 
+export default function UserCard({
+    id,
+    firstName,
+    lastName,
+    dateOfBirth,
+    email,
+    phoneNumber
+}) {
+    const { user } = useUserContext();
 
-export default function UserCard() {
+    const createdDate = new Date(dateOfBirth).toLocaleString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+    });
+
+    const isOwnProfile = String(user?.id) === String(id);
+
     return (
-        <>
-            <div className="user-card">
-                <div className="user-info">
-                    <h2 className="full-name">John Doe</h2>
-                    <p className="date-of-birth"> 02 Aug 1999</p>
-                    <p className="email">john.doe@example.com</p>
-                    <p className="phone-number">+1234567890</p>
-                    <p className="id">1</p>
-                </div>
+        <div className={styles.userInfoContainer}>
+            <div className={styles.userInfo}>
+                <h2 className={styles.fullName}>Name: {firstName} {lastName}</h2>
+                <p className="date-of-birth">Birth date: {createdDate}</p>
+                <p className="email">Email: {email}</p>
+                <p className="phone-number">Phone number: {phoneNumber}</p>
             </div>
-        </>
+            {isOwnProfile && <p className={styles.ownProfile}>This is your profile</p>}
+        </div>
     );
 }

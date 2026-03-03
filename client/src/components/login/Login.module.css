@@ -28,6 +28,7 @@
     color: #333;
     align-self: flex-start;
     padding:0 0 4px 2px;
+    text-align: center;
 }
 
 .inputContainer input {
@@ -49,7 +50,7 @@
     margin-bottom: 0;
 }
 
-form button {
+.formContainer form button {
     font-size: 20px;
     padding: 8px 24px 10px 24px;
     margin-top: 1.5em;

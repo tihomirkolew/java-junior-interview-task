@@ -5,6 +5,9 @@ import java_junior_interview_task.user.dto.RegisterRequest;
 import java_junior_interview_task.user.entity.User;
 import java_junior_interview_task.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +21,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         authService.register(request);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok(Map.of("message" , "User registered successfully"));
     }
 
     @PostMapping("/login")
