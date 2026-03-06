@@ -1,7 +1,6 @@
 package java_junior_interview_task.user.service;
 
-import java_junior_interview_task.exception.EmailDuplicateException;
-import java_junior_interview_task.exception.PhoneNumberDuplicateException;
+import java_junior_interview_task.exception.*;
 import java_junior_interview_task.security.Authentication;
 import java_junior_interview_task.user.dto.LoginRequest;
 import java_junior_interview_task.user.dto.RegisterRequest;
@@ -13,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -46,10 +43,10 @@ public class AuthService implements UserDetailsService {
 
     public User login(LoginRequest loginRequest) {
         User user = userRepository.findByEmail(loginRequest.getEmail())
-                .orElseThrow(() -> new RuntimeException("Invalid email!"));
+                .orElseThrow(() -> new NoUserFoundByEmailException("Invalid email or password"));
 
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid password!");
+            throw new IncorrectPasswordException("Invalid email or password");
         }
 
         return user;

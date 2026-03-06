@@ -2,6 +2,7 @@ package java_junior_interview_task.user.service;
 
 import jakarta.transaction.Transactional;
 import java_junior_interview_task.exception.EmailDuplicateException;
+import java_junior_interview_task.exception.NoUserFoundByIdException;
 import java_junior_interview_task.exception.PhoneNumberDuplicateException;
 import java_junior_interview_task.user.dto.UserDto;
 import java_junior_interview_task.user.entity.User;
@@ -62,7 +63,7 @@ public class UserService {
     // read one user
     public UserDto getUser(int id) {
 
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new NoUserFoundByIdException("User with id " + id + " not found."));
 
         return UserMapper.toUserDto(user);
     }

@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { useNavigate } from "react-router";
 
 const UserContext = createContext({
     isAuthenticated: false,
@@ -19,6 +20,8 @@ const UserContext = createContext({
 export function UserProvider({ children }) {
 
     const [user, setUser] = useState(null);
+    const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     const loginHandler = async (email, password) => {
 
@@ -33,21 +36,17 @@ export function UserProvider({ children }) {
                 body: JSON.stringify(credentials),
             });
 
-            let error;
+            if (!response.ok) {
+                const errorData = await response.json();
+                setErrors(errorData);
+                return;
+            }
+
             if (response.ok) {
+                const data = await response.json();
+                setUser({ ...data, plainPassword: password });
 
-                const contentType = response.headers.get('content-type');
-
-                if (contentType && contentType.includes('application/json')) {
-                    const data = await response.json();
-                    setUser({ ...data, plainPassword: password });
-                } else {
-                    error = await response.text();
-                    setUser({ email, plainPassword: password });
-                }
-            } else {
-                error = await response.text();
-                throw new Error(error);
+                navigate("/")
             }
 
         } catch (error) {
@@ -61,7 +60,8 @@ export function UserProvider({ children }) {
         isAuthenticated: !!user,
         user,
         loginHandler,
-        setUser
+        setUser,
+        errors
     };
 
     return (

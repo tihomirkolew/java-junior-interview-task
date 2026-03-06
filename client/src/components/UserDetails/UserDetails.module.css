@@ -5,9 +5,12 @@
     margin-top: 20px;
     gap: 2em;
     height: 100vh;
+    padding-top: 3em;
 }
 
 .searchUserContainer form {
+    display: flex;
+    flex-direction: column;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -24,7 +27,7 @@
 }
 
 .inputContainer label {
-    font-size: 22px;
+    font-size: 28px;
     color: #333;
     align-self: center;
     padding:0 0 4px 2px;

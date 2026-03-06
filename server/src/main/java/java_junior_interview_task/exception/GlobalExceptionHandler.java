@@ -33,4 +33,25 @@ public class GlobalExceptionHandler {
         errors.put("email", ex.getMessage());
         return ResponseEntity.badRequest().body(errors);
     }
+
+    @ExceptionHandler(NoUserFoundByIdException.class)
+    public ResponseEntity<Map<String, String>> handleNoUserFound(NoUserFoundByIdException ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("id", ex.getMessage());
+        return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(NoUserFoundByEmailException.class)
+    public ResponseEntity<Map<String, String>> handleUserNotFound(NoUserFoundByEmailException ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("email", ex.getMessage());
+        return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(IncorrectPasswordException.class)
+    public ResponseEntity<Map<String, String>> incorrectPassword(IncorrectPasswordException ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("password", ex.getMessage());
+        return ResponseEntity.badRequest().body(errors);
+    }
 }

@@ -1,12 +1,11 @@
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import { useUserContext } from '../../contexts/UserContext';
 import styles from './Login.module.css'
 import { useState } from 'react';
 
 export default function Login() {
 
-    const { loginHandler } = useUserContext();
-    const navigate = useNavigate();
+    const { loginHandler, errors } = useUserContext();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -19,7 +18,6 @@ export default function Login() {
         е.preventDefault();
         try {
             await loginHandler(formData.email, formData.password);
-            navigate('/');
         } catch (error) {
             alert(error.message);
         }
@@ -58,6 +56,8 @@ export default function Login() {
                         onChange={changeHandler}
                     />
                 </div>
+                {errors.email && <p className={styles.textDanger}>{errors.email}</p>}
+                {errors.password && <p className={styles.textDanger}>{errors.password}</p>}
                 <p className={styles.registerLink}><Link to="/register">Don't have an account? Register here.</Link></p>
                 <button type="submit">Login</button>
             </form>

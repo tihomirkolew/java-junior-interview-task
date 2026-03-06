@@ -62,11 +62,10 @@ export default function UserDetails() {
                 }
             });
 
-            console.log(res);
-
             if (!res.ok) {
                 const errorData = await res.json();
                 setErrors(errorData)
+                console.log(errorData);
 
                 return;
             }
@@ -98,6 +97,7 @@ export default function UserDetails() {
                         />
                         <button type="submit">Search</button>
                     </div>
+                    {errors.id && <p className={styles.textDanger}>{errors.id}</p>}
                 </form>
                 <div className={styles.userInfo}>
                     {userData && <UserCard key={userData.id} {...userData} />}

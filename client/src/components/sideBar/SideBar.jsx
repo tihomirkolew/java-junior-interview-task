@@ -37,7 +37,9 @@ export default function SideBar() {
                     {isAuthenticated && (
                         <li><Link to="/logout">Logout</Link></li>
                     )}
-                    <span>Logged in with: {user?.email}</span>
+                    {isAuthenticated && user?.email && (
+                        <span>Logged in with: {user?.email}</span>
+                    )}
                 </ul>
             </nav>
         </div>
