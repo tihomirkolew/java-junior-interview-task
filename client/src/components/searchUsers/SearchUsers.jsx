@@ -1,7 +1,8 @@
 export default function UserSearch() {
     return (
         <>
-            <h1>Search users</h1>
+            // todo: search user form
+            <h1>Search user</h1>
         </>
     );
 }

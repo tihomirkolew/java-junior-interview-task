@@ -56,12 +56,16 @@ export function UserProvider({ children }) {
 
     }
 
+    // todo: add registerHandler
+    // todo: add logoutHandler
+
     const contextValues = {
         isAuthenticated: !!user,
         user,
         loginHandler,
         setUser,
-        errors
+        errors,
+        setErrors
     };
 
     return (

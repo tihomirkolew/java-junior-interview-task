@@ -43,10 +43,10 @@ public class AuthService implements UserDetailsService {
 
     public User login(LoginRequest loginRequest) {
         User user = userRepository.findByEmail(loginRequest.getEmail())
-                .orElseThrow(() -> new NoUserFoundByEmailException("Invalid email or password"));
+                .orElseThrow(() -> new NoUserFoundByEmailException("Invalid email or password."));
 
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            throw new IncorrectPasswordException("Invalid email or password");
+            throw new IncorrectPasswordException("Invalid email or password.");
         }
 
         return user;

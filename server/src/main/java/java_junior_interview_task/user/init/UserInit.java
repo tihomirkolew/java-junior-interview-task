@@ -5,7 +5,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java_junior_interview_task.user.dto.UserDto;
 import java_junior_interview_task.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,7 +20,6 @@ public class UserInit implements CommandLineRunner {
 
     private final UserService userService;
 
-    @Autowired
     public UserInit(UserService userService) {
         this.userService = userService;
     }
@@ -48,7 +46,6 @@ public class UserInit implements CommandLineRunner {
                     new TypeReference<List<UserDto>>() {}
             );
 
-            // Създай всички потребители
             for (UserDto userDto : users) {
                 userService.createUser(userDto);
                 log.info("Created user: {} {}", userDto.getFirstName(), userDto.getLastName());
@@ -57,7 +54,7 @@ public class UserInit implements CommandLineRunner {
             log.info("Successfully initialized {} users", users.size());
 
         } catch (IOException e) {
-            log.error("Failed to intialize users from JSON file", e);
+            log.error("Failed to initialize users from JSON file", e);
         }
     }
 }

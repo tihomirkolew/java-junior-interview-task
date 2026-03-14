@@ -5,19 +5,41 @@ import { useState } from 'react';
 
 export default function Login() {
 
-    const { loginHandler, errors } = useUserContext();
+    const { loginHandler, errors, setErrors } = useUserContext();
 
-    const [formData, setFormData] = useState({
+    const [values, setValues] = useState({
         email: '',
         password: ''
     });
 
-    // validation can be added here
+    const validateForm = (values) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(values.email)) {
+            return { email: 'Please enter a valid email address.' };
+        }
+
+        if (!values.password) {
+            return { password: 'Please enter a valid password.' };
+        }
+
+        return {};
+    }
+
+    // todo: add validation here
 
     const onSubmit = async (е) => {
         е.preventDefault();
+
+        const validationErrors = validateForm(values);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            console.log(validationErrors);
+            
+            return;
+        }
+
         try {
-            await loginHandler(formData.email, formData.password);
+            await loginHandler(values.email, values.password);
         } catch (error) {
             alert(error.message);
         }
@@ -25,8 +47,8 @@ export default function Login() {
 
     const changeHandler = (e) => {
         e.preventDefault();
-        setFormData({
-            ...formData,
+        setValues({
+            ...values,
             [e.target.name]: e.target.value
         });
     }
@@ -37,13 +59,15 @@ export default function Login() {
             <form
                 className={styles.form}
                 onSubmit={onSubmit}
+                noValidate
             >
                 <div className={styles.inputContainer}>
                     <label>Email</label>
                     <input
                         type="email"
                         name="email"
-                        value={formData.email}
+                        noValidate
+                        value={values.email}
                         onChange={changeHandler}
                     />
                 </div>
@@ -52,7 +76,8 @@ export default function Login() {
                     <input
                         type="password"
                         name="password"
-                        value={formData.password}
+                        noValidate
+                        value={values.password}
                         onChange={changeHandler}
                     />
                 </div>
