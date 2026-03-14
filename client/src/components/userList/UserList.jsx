@@ -5,7 +5,7 @@ import styles from './UserList.module.css';
 import UserCard from "../userCard/UserCard";
 
 export default function UserList() {
-    // todo: implement user list
+    // todo: fix styles for userInfoContainer
 
     const { user, isAuthenticated } = useUserContext();
     const navigate = useNavigate();
