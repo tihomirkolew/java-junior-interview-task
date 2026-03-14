@@ -2,7 +2,7 @@ package java_junior_interview_task.user.init;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java_junior_interview_task.user.dto.UserDto;
+import java_junior_interview_task.user.dto.UserRequestDto;
 import java_junior_interview_task.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -41,12 +41,12 @@ public class UserInit implements CommandLineRunner {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.registerModules(new JavaTimeModule());
 
-            List<UserDto> users = objectMapper.readValue(
+            List<UserRequestDto> users = objectMapper.readValue(
                     inputStream,
-                    new TypeReference<List<UserDto>>() {}
+                    new TypeReference<List<UserRequestDto>>() {}
             );
 
-            for (UserDto userDto : users) {
+            for (UserRequestDto userDto : users) {
                 userService.createUser(userDto);
                 log.info("Created user: {} {}", userDto.getFirstName(), userDto.getLastName());
             }

@@ -49,3 +49,12 @@
     padding: 6px 24px 10px 24px;
     align-self: center;
 }
+
+.textDanger {
+    color: red;
+    font-size: 20px;
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+

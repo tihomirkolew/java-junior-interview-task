@@ -4,7 +4,8 @@ import jakarta.transaction.Transactional;
 import java_junior_interview_task.exception.EmailDuplicateException;
 import java_junior_interview_task.exception.NoUserFoundByIdException;
 import java_junior_interview_task.exception.PhoneNumberDuplicateException;
-import java_junior_interview_task.user.dto.UserDto;
+import java_junior_interview_task.user.dto.UserRequestDto;
+import java_junior_interview_task.user.dto.UserResponseDto;
 import java_junior_interview_task.user.entity.User;
 import java_junior_interview_task.user.mapper.UserMapper;
 import java_junior_interview_task.user.repository.UserRepository;
@@ -34,7 +35,7 @@ public class UserService {
     // create user
 
     @Transactional
-    public UserDto createUser(UserDto userDto) {
+    public UserRequestDto createUser(UserRequestDto userDto) {
 
         if (userRepository.existsByEmail(userDto.getEmail())) {
             throw new EmailDuplicateException("User with email " + userDto.getEmail() + " already exists.");
@@ -55,30 +56,28 @@ public class UserService {
 
         User savedUser = userRepository.save(user);
 
-        return UserMapper.toUserDto(savedUser);
+        return UserMapper.toUserRequestDto(savedUser);
     }
 
-    // read one user
-    public UserDto getUser(int id) {
+    public UserResponseDto getUser(int id) {
 
         User user = userRepository.findById(id).orElseThrow(() -> new NoUserFoundByIdException("User with id " + id + " not found."));
 
-        return UserMapper.toUserDto(user);
+        return UserMapper.toUserResponseDto(user);
     }
 
-    public List<UserDto> getAllUsers() {
+    public List<UserResponseDto> getAllUsers() {
 
         List<User> userList = userRepository.findAll();
 
-        List<UserDto> userDtoList = new ArrayList<>();
+        List<UserResponseDto> userDtoList = new ArrayList<>();
 
-        userList.forEach(user -> userDtoList.add(UserMapper.toUserDto(user)));
+        userList.forEach(user -> userDtoList.add(UserMapper.toUserResponseDto(user)));
 
         return userDtoList;
     }
 
-    // read all users (search by provided search term)
-    public Page<UserDto> getUsersByTerm(String term, int page, int size) {
+    public Page<UserResponseDto> getUsersByTerm(String term, int page, int size) {
 
         Sort sort = Sort.by("lastName").and(Sort.by("dateOfBirth"));
         Pageable pageable = PageRequest.of(page, size, sort);
@@ -88,14 +87,13 @@ public class UserService {
                 pageable
         );
 
-        Page<UserDto> userDtoPage = userPage.map(UserMapper::toUserDto);
+        Page<UserResponseDto> userDtoPage = userPage.map(UserMapper::toUserResponseDto);
 
         return userDtoPage;
     }
 
-    // update user
     @Transactional
-    public UserDto updateUserInfo(int id, UserDto userDto) {
+    public UserRequestDto updateUserInfo(int id, UserRequestDto userDto) {
 
         User userToUpdate = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
@@ -107,7 +105,7 @@ public class UserService {
 
         User savedUser = userRepository.save(userToUpdate);
 
-        return UserMapper.toUserDto(savedUser);
+        return UserMapper.toUserRequestDto(savedUser);
     }
 
     // delete user

@@ -7,7 +7,8 @@ export default function UserCard({
     lastName,
     dateOfBirth,
     email,
-    phoneNumber
+    phoneNumber,
+    userListStyles
 }) {
     const { user } = useUserContext();
 
@@ -20,7 +21,7 @@ export default function UserCard({
     const isOwnProfile = String(user?.id) === String(id);
 
     return (
-        <div className={styles.userInfoContainer}>
+        <div className={`${userListStyles} ${styles.userInfoContainer}`}>
             <div className={styles.userInfo}>
                 <h2 className={styles.fullName}>Name: {firstName} {lastName}</h2>
                 <p className="date-of-birth">Birth date: {createdDate}</p>

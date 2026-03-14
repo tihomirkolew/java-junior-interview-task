@@ -1,0 +1,12 @@
+.userListContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.userInfoContainer {
+    color: red;
+}

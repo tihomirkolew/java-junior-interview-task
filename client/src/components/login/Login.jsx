@@ -25,8 +25,6 @@ export default function Login() {
         return {};
     }
 
-    // todo: add validation here
-
     const onSubmit = async (е) => {
         е.preventDefault();
 

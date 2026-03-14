@@ -4,7 +4,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java_junior_interview_task.user.service.UserService;
-import java_junior_interview_task.user.dto.UserDto;
+import java_junior_interview_task.user.dto.UserRequestDto;
+import java_junior_interview_task.user.dto.UserResponseDto;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,48 +27,48 @@ public class UserController {
 
     @PostMapping("/create")
     @Operation(summary = "Create user")
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<UserRequestDto> createUser(@Valid @RequestBody UserRequestDto userDto) {
 
-        UserDto createdUser = userService.createUser(userDto);
+        UserRequestDto createdUser = userService.createUser(userDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get a single user")
-    public ResponseEntity<UserDto> getUserById(@PathVariable int id) {
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable int id) {
 
-        UserDto getUserById = userService.getUser(id);
+        UserResponseDto getUserById = userService.getUser(id);
 
         return ResponseEntity.ok(getUserById);
     }
 
     @GetMapping("/search")
     @Operation(summary = "Get users with provided term")
-    public ResponseEntity<Page<UserDto>> getUsersByTerm(
+    public ResponseEntity<Page<UserResponseDto>> getUsersByTerm(
             @RequestParam String term,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
 
-        Page<UserDto> userListByTerm = userService.getUsersByTerm(term, page, size);
+        Page<UserResponseDto> userListByTerm = userService.getUsersByTerm(term, page, size);
 
         return ResponseEntity.ok(userListByTerm);
     }
 
     @GetMapping
     @Operation(summary = "Get all users")
-    public ResponseEntity<List<UserDto>> getAllUsers() {
+    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
 
-        List<UserDto> userList = userService.getAllUsers();
+        List<UserResponseDto> userList = userService.getAllUsers();
 
         return ResponseEntity.ok(userList);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update user")
-    public ResponseEntity<UserDto> updateUser(@PathVariable int id, @Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<UserRequestDto> updateUser(@PathVariable int id, @Valid @RequestBody UserRequestDto userDto) {
 
-        UserDto updatedUser = userService.updateUserInfo(id, userDto);
+        UserRequestDto updatedUser = userService.updateUserInfo(id, userDto);
 
         return ResponseEntity.ok(updatedUser);
     }
