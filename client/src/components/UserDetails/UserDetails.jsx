@@ -100,7 +100,7 @@ export default function UserDetails() {
                     {errors.id && <p className={styles.textDanger}>{errors.id}</p>}
                 </form>
                 <div className={styles.userInfo}>
-                    {userData && <UserCard key={userData.id} {...userData} />}
+                    {userData.id && <UserCard key={userData.id} {...userData} />}
                 </div>
             </div>
         </>

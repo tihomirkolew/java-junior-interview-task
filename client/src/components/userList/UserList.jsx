@@ -53,7 +53,7 @@ export default function UserList() {
                         <UserCard
                             key={u.id}
                             {...u}
-                            userListStyles={styles.userinfoContainer}
+                            userListStyles={styles.userInfoContainer}
                         />)
                 ) : (
                     <p>No users found.</p>

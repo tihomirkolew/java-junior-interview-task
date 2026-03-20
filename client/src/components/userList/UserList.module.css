@@ -7,6 +7,13 @@
     overflow-y: scroll;
 }
 
+.userListContainer h1 {
+    margin-bottom: 0;
+}
+
 .userInfoContainer {
-    color: red;
+    margin: 2em 2em 0 2em;
+    width: 94.8%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
