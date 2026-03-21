@@ -1,0 +1,80 @@
+.searchUserContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+    height: 100vh;
+    margin: 3em 2em 0 2em;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.searchUserContainer form {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 10px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.searchUserContainer form .inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    box-sizing: border-box;
+    width: 100%;
+
+}
+
+.searchInputField {
+    align-self: flex-start;
+}
+
+.inputContainer label {
+    font-size: 28px;
+    color: #333;
+    align-self: center;
+    padding:0 0 4px 2px;
+    text-align: center;
+}
+
+.inputContainer input {
+    padding: 0 12px;
+    font-size: 22px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    height: 48px;
+    width: 320px;
+}
+
+.inputContainer button {
+    height: 38px;
+    font-size: 16px;
+    padding: 6px 24px 10px 24px;
+    align-self: center;
+}
+
+.textDanger {
+    color: red;
+    font-size: 20px;
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.userInfoContainer {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
