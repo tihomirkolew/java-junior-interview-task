@@ -8,11 +8,16 @@
   box-sizing: border-box;
 }
 
+body, #root {
+  overflow: hidden;
+}
+
 .content {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-grow: 10;
+  scrollbar-width: none;
 }
 
 .logo {

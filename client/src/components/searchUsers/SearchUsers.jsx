@@ -37,7 +37,7 @@ export default function UserSearch() {
     }
 
     const fetchUsers = async (currentPage = 0) => {
-        const size = values.size || 0;
+        const size = values.size || 5;
 
         try {
             const res = await fetch(
@@ -54,12 +54,11 @@ export default function UserSearch() {
                 const errorData = await res.json();
                 setErrors(errorData);
                 console.log(errorData);
-
                 return;
             }
 
             const data = await res.json();
-            console.log(data);
+            console.log(data.content);
 
             setUserData(data.content);
             setTotalPages(data.totalPages);
@@ -107,14 +106,14 @@ export default function UserSearch() {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div>
+                        <div className={styles.buttonAndPageSizeField}>
                             <input
                                 type="number"
                                 name="size"
-                                placeholder="Results per page"
-                                value={values.size || ''}
+                                value={values.size || 5}
                                 onChange={handleChange}
                                 min={1}
+                                style={{ width: `${String(values.size || 5).length + 2}ch` }}
                             />
                             <button type="submit">Search</button>
                         </div>
@@ -128,7 +127,7 @@ export default function UserSearch() {
 
                 {totalPages > 1 && (
                     <div className={styles.pagination}>
-                        <div className={styles.paginationButtons}>
+                        <div>
                             <button onClick={() => handlePageChange(page - 1)} disabled={page === 0}>Prev</button>
                             <button onClick={() => handlePageChange(page + 1)} disabled={page === totalPages - 1}>Next</button>
                         </div>

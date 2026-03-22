@@ -2,20 +2,25 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2em;
     height: 100vh;
-    margin: 3em 2em 0 2em;
+    padding: 2em;
     box-sizing: border-box;
     width: 100%;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    gap: 1em
+}
+
+.searchUserContainer h1 {
+    margin: 0;
 }
 
 .searchUserContainer form {
     display: flex;
     flex-direction: column;
-    position: sticky;
     top: 0;
     z-index: 100;
-    padding: 10px 0;
+    padding: 1em 0;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -23,11 +28,23 @@
 
 .searchUserContainer form .inputContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     gap: 1em;
     box-sizing: border-box;
     width: 100%;
+    padding: 0 4em
+}
 
+.pagination {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.pagination div {
+    display: flex;
+    gap: 1em;
 }
 
 .searchInputField {
@@ -71,10 +88,28 @@
     justify-content: center;
     box-sizing: border-box;
     width: 100%;
+    gap: 2em;
 }
 
 .userInfoContainer {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    margin-top: 0;
+}
+
+.buttonAndPageSizeField {
+    display: flex;
+    gap: 1rem;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.buttonAndPageSizeField input {
+    height: 42px;
+}
+
+.buttonAndPageSizeField button {
+    height: 42px;
+    border-radius: 5px;
 }
