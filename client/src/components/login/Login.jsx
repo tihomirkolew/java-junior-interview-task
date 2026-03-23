@@ -43,7 +43,7 @@ export default function Login() {
         }
     }
 
-    const changeHandler = (e) => {
+    const onChange = (e) => {
         e.preventDefault();
         setValues({
             ...values,
@@ -66,7 +66,7 @@ export default function Login() {
                         name="email"
                         noValidate
                         value={values.email}
-                        onChange={changeHandler}
+                        onChange={onChange}
                     />
                 </div>
                 <div className={styles.inputContainer}>
@@ -76,7 +76,7 @@ export default function Login() {
                         name="password"
                         noValidate
                         value={values.password}
-                        onChange={changeHandler}
+                        onChange={onChange}
                     />
                 </div>
                 {errors.email && <p className={styles.textDanger}>{errors.email}</p>}

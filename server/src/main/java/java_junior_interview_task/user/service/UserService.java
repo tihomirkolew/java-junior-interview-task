@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import java_junior_interview_task.exception.EmailDuplicateException;
 import java_junior_interview_task.exception.NoUserFoundByIdException;
 import java_junior_interview_task.exception.PhoneNumberDuplicateException;
+import java_junior_interview_task.user.dto.UserEditDto;
 import java_junior_interview_task.user.dto.UserRequestDto;
 import java_junior_interview_task.user.dto.UserResponseDto;
 import java_junior_interview_task.user.entity.User;
@@ -38,11 +39,11 @@ public class UserService {
     public UserRequestDto createUser(UserRequestDto userDto) {
 
         if (userRepository.existsByEmail(userDto.getEmail())) {
-            throw new EmailDuplicateException("User with email " + userDto.getEmail() + " already exists.");
+            throw new EmailDuplicateException("Email already in use.");
         }
 
         if (userRepository.existsByPhoneNumber(userDto.getPhoneNumber())) {
-            throw new PhoneNumberDuplicateException("User with phone number " + userDto.getPhoneNumber() + " already exists.");
+            throw new PhoneNumberDuplicateException("Phone number already in use.");
         }
 
         User user = User.builder()
@@ -93,7 +94,15 @@ public class UserService {
     }
 
     @Transactional
-    public UserRequestDto updateUserInfo(int id, UserRequestDto userDto) {
+    public UserEditDto updateUserInfo(int id, UserEditDto userDto) {
+
+        if (userRepository.existsByEmailAndIdNot(userDto.getEmail(), id)) {
+            throw new EmailDuplicateException("Email already in use.");
+        }
+
+        if (userRepository.existsByPhoneNumberAndIdNot(userDto.getPhoneNumber(), id)) {
+            throw new PhoneNumberDuplicateException("Phone number already in use.");
+        }
 
         User userToUpdate = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
@@ -105,7 +114,7 @@ public class UserService {
 
         User savedUser = userRepository.save(userToUpdate);
 
-        return UserMapper.toUserRequestDto(savedUser);
+        return UserMapper.toUserEditDto(savedUser);
     }
 
     // delete user

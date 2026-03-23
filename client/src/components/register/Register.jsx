@@ -55,7 +55,7 @@ export default function Register() {
         return {};
     }
 
-    const handleChange = (e) => {
+    const onChange = (e) => {
         setValues(state => ({
             ...state,
             [e.target.name]: e.target.value
@@ -120,7 +120,7 @@ export default function Register() {
                                 type="text"
                                 id="firstName"
                                 value={values.firstName}
-                                onChange={handleChange}
+                                onChange={onChange}
                                 name="firstName"
                                 noValidate
                             />
@@ -132,7 +132,7 @@ export default function Register() {
                                 type="text"
                                 id="lastName"
                                 value={values.lastName}
-                                onChange={handleChange}
+                                onChange={onChange}
                                 name="lastName"
                                 noValidate
                             />
@@ -144,7 +144,7 @@ export default function Register() {
                                 type="date"
                                 id="dateOfBirth"
                                 value={values.dateOfBirth}
-                                onChange={handleChange}
+                                onChange={onChange}
                                 name="dateOfBirth"
                                 noValidate
                             />
@@ -156,7 +156,7 @@ export default function Register() {
                                 type="tel"
                                 id="phoneNumber"
                                 value={values.phoneNumber}
-                                onChange={handleChange}
+                                onChange={onChange}
                                 name="phoneNumber"
                                 autoComplete="tel"
                                 noValidate
@@ -169,7 +169,7 @@ export default function Register() {
                                 type="email"
                                 id="email"
                                 value={values.email}
-                                onChange={handleChange}
+                                onChange={onChange}
                                 autoComplete="new-email"
                                 name="email"
                                 noValidate
@@ -182,7 +182,7 @@ export default function Register() {
                                 type="password"
                                 id="password"
                                 value={values.password}
-                                onChange={handleChange}
+                                onChange={onChange}
                                 autoComplete="new-password"
                                 name="password"
                                 noValidate
@@ -195,7 +195,7 @@ export default function Register() {
                                 type="password"
                                 id="confirmPassword"
                                 value={values.confirmPassword}
-                                onChange={handleChange}
+                                onChange={onChange}
                                 autoComplete="new-password"
                                 name="confirmPassword"
                                 noValidate

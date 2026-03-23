@@ -85,7 +85,7 @@ export default function CreateUser() {
 
             if (!res.ok) {
                 const errorData = await res.json();
-                alert(errorData.message);
+                setErrors(errorData);
                 return;
             }
 
@@ -106,7 +106,7 @@ export default function CreateUser() {
     return (
         <>
             <div className={styles.formContainer}>
-                <h1>Create user</h1>
+                <h1>Create an user</h1>
                 <form
                     id="register-form"
                     className={styles.form}

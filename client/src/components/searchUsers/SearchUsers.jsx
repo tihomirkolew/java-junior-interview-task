@@ -22,7 +22,7 @@ export default function UserSearch() {
         return;
     }
 
-    const handleChange = (e) => {
+    const onChange = (e) => {
         setValues(state => ({
             ...state,
             [e.target.name]: e.target.value
@@ -90,7 +90,7 @@ export default function UserSearch() {
     return (
         <>
             <div className={styles.searchUserContainer}>
-                <h1>Search user</h1>
+                <h1>Search an user</h1>
                 <form
                     id="search-user-form"
                     className={styles.form}
@@ -103,7 +103,7 @@ export default function UserSearch() {
                                 name="param"
                                 placeholder="Search"
                                 value={values.param || ''}
-                                onChange={handleChange}
+                                onChange={onChange}
                             />
                         </div>
                         <div className={styles.buttonAndPageSizeField}>
@@ -111,7 +111,7 @@ export default function UserSearch() {
                                 type="number"
                                 name="size"
                                 value={values.size || 5}
-                                onChange={handleChange}
+                                onChange={onChange}
                                 min={1}
                                 style={{ width: `${String(values.size || 5).length + 2}ch` }}
                             />

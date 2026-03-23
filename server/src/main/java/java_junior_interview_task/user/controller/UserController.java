@@ -3,6 +3,7 @@ package java_junior_interview_task.user.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java_junior_interview_task.user.dto.UserEditDto;
 import java_junior_interview_task.user.service.UserService;
 import java_junior_interview_task.user.dto.UserRequestDto;
 import java_junior_interview_task.user.dto.UserResponseDto;
@@ -64,11 +65,11 @@ public class UserController {
         return ResponseEntity.ok(userList);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/edit/{id}")
     @Operation(summary = "Update user")
-    public ResponseEntity<UserRequestDto> updateUser(@PathVariable int id, @Valid @RequestBody UserRequestDto userDto) {
+    public ResponseEntity<UserEditDto> updateUser(@PathVariable int id, @Valid @RequestBody UserEditDto userDto) {
 
-        UserRequestDto updatedUser = userService.updateUserInfo(id, userDto);
+        UserEditDto updatedUser = userService.updateUserInfo(id, userDto);
 
         return ResponseEntity.ok(updatedUser);
     }

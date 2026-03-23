@@ -1,5 +1,6 @@
 package java_junior_interview_task.user.mapper;
 
+import java_junior_interview_task.user.dto.UserEditDto;
 import java_junior_interview_task.user.dto.UserRequestDto;
 import java_junior_interview_task.user.dto.UserResponseDto;
 import java_junior_interview_task.user.entity.User;
@@ -23,6 +24,16 @@ public class UserMapper {
     public UserResponseDto toUserResponseDto(User user) {
         return new UserResponseDto(
                 user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getDateOfBirth(),
+                user.getPhoneNumber(),
+                user.getEmail()
+        );
+    }
+
+    public UserEditDto toUserEditDto(User user) {
+        return new UserEditDto(
                 user.getFirstName(),
                 user.getLastName(),
                 user.getDateOfBirth(),

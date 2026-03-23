@@ -28,7 +28,7 @@ export default function UserDetails() {
         return;
     }
 
-    const handleChange = (e) => {
+    const onChange = (e) => {
         setValues(state => ({
             ...state,
             [e.target.name]: e.target.value
@@ -93,7 +93,7 @@ export default function UserDetails() {
                             type="id"
                             name="id"
                             value={values.id}
-                            onChange={handleChange}
+                            onChange={onChange}
                         />
                         <button type="submit">Search</button>
                     </div>
