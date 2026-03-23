@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import { useUserContext } from '../../contexts/UserContext';
-import styles from './SearchUsers.module.css'
+import styles from './UserSearch.module.css'
 import { useState } from 'react';
 import UserCard from '../userCard/UserCard';
 

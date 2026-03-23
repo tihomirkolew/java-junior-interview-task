@@ -2,15 +2,17 @@ import { useState } from 'react';
 import styles from '../login/Login.module.css'
 import { useUserContext } from '../../contexts/UserContext';
 import { useNavigate } from 'react-router';
+import { useUserDelete } from '../../hooks/useUserDelete';
 
 export default function EditUser() {
     // todo: edit user form
     const navigate = useNavigate();
 
     const { user, isAuthenticated } = useUserContext();
+    const { deleteHandler, deleteErrors } = useUserDelete();
     const [errors, setErrors] = useState({});
 
-    const [userId, setUserId] = useState();
+    const [userId, setUserId] = useState('');
 
     const [values, setValues] = useState({
         firstName: '',
@@ -111,6 +113,11 @@ export default function EditUser() {
 
         if (!isAuthenticated) {
             navigate("/login");
+            return;
+        }
+
+        if (!userId || isNaN(userId)) {
+            setErrors({ id: 'Please enter a valid id.' });
             return;
         }
 
@@ -227,7 +234,13 @@ export default function EditUser() {
                         />
                         {errors.email && <p className={styles.textDanger}>{errors.email}</p>}
                     </div>
-                    <button type="submit">Edit</button>
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '70%' }}>
+                        <button type="submit">Edit</button>
+                        <button type="button" onClick={async () => {
+                            await deleteHandler(userId);
+                            onIdChange({ target: { value: userId } });
+                        }}>Delete</button>
+                    </div>
                 </form >
             </div >
 

@@ -49,6 +49,7 @@ export default function Login() {
             ...values,
             [e.target.name]: e.target.value
         });
+        setErrors({});
     }
 
     return (

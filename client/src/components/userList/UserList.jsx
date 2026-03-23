@@ -31,7 +31,6 @@ export default function UserList() {
                 .then(response => response.json())
                 .then(data => {
                     setUserList(data);
-                    console.log(userList);
                     
                 })
                 .catch(error => {

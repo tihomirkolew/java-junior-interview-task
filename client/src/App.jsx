@@ -3,10 +3,10 @@ import './App.css'
 import SideBar from './components/sideBar/SideBar'
 import Home from './components/home/Home'
 import UserDetails from './components/UserDetails/UserDetails'
-import CreateUser from './components/createUser/CreateUser'
+import UserCreate from './components/userCreate/UserCreate'
 import UserList from './components/userList/UserList'
-import UserSearch from './components/searchUsers/SearchUsers'
-import EditUser from './components/editUser/EditUser'
+import UserSearch from './components/userSearch/UserSearch'
+import UserEdit from './components/userEdit/UserEdit'
 import Login from './components/login/Login'
 import Register from './components/register/Register'
 import Logout from './components/logout/Logout'
@@ -29,11 +29,11 @@ function App() {
           </Route>
 
           <Route element={<ProtectedRoute />}>
-            <Route path="/create" element={<CreateUser />} />
+            <Route path="/create" element={<UserCreate />} />
             <Route path="/details" element={<UserDetails />} />
             <Route path="/list" element={<UserList />} />
             <Route path="/search" element={<UserSearch />} />
-            <Route path="/edit" element={<EditUser />} />
+            <Route path="/edit" element={<UserEdit />} />
             <Route path="/logout" element={<Logout />} />
           </Route>
 
