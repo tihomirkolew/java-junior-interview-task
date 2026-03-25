@@ -1,6 +1,6 @@
-# User Management REST API
+# User Management System
 
-A CRUD (Create, Read, Update, Delete) REST API application for user management, built with Spring Boot.
+A full-stack CRUD (Create, Read, Update, Delete) application for user management, built as a Junior Java/Kotlin Developer interview task. Features a **Spring Boot** REST API backend and a **React** frontend with authentication, search, pagination, and more.
 
 ## 📋 Table of Contents
 
@@ -11,36 +11,58 @@ A CRUD (Create, Read, Update, Delete) REST API application for user management, 
 - [Running the Application](#running-the-application)
 - [API Documentation](#api-documentation)
 - [Project Structure](#project-structure)
+- [Security](#security)
+
+---
 
 ## ✨ Features
 
 ### Core Functionality
-- **Create User** - Add new users to the system
-- **Read User** - Retrieve a single user by ID
-- **Search Users** - Search users by term
-- **Update User** - Modify existing user information
-- **Delete User** - Remove users from the system
+- **Create User** — Add new users to the system
+- **Read User** — Retrieve a single user by ID
+- **Read All Users** — Retrieve all users at once
+- **Search Users** — Search by first name, last name, email, or phone number with **pagination** and **sorting** by last name and date of birth
+- **Update User** — Modify existing user information (auto-fills the form by ID)
+- **Delete User** — Remove users from the system with a confirmation prompt
+
+### Auth
+- **Register** — Create a personal account
+- **Login / Logout** — Session managed via React Context
+- **Protected routes** — All user management pages require authentication
+- **Guest routes** — Login and register redirect away if already logged in
 
 ### Additional Features
-- **Data Validation** - Bean Validation with Jakarta Validation
-- **DTO Pattern** - Data Transfer Objects for clean separation
-- **RESTful API** - Standard HTTP methods (GET, POST, PUT, DELETE)
-- **Security** - Spring Security with HTTP Basic Authentication
-- **Swagger Documentation** - OpenAPI/Swagger UI for API documentation
-- **Exception Handling** - Proper error handling and responses
+- **Data Validation** — Client-side (React) and server-side (Jakarta Bean Validation)
+- **DTO Pattern** — Separate request, response, and edit DTOs
+- **RESTful API** — Standard HTTP methods (GET, POST, PUT, DELETE)
+- **HTTP Basic Auth** — Spring Security with BCrypt password hashing
+- **Swagger / OpenAPI** — Interactive API documentation
+- **Global Exception Handling** — Descriptive error responses for all custom exceptions
+- **Duplicate detection** — Unique constraints on email and phone number with proper error messages
+- **Sample data seeding** — Auto-loads users from `sample-users.json` on first startup
+
+---
 
 ## 🛠 Technologies
 
+**Backend**
 - **Java** 21
-- **Spring Boot** 4.0.2
-- **Spring Data JPA** - Database interactions
-- **Spring Security** - HTTP Basic Authentication
-- **Spring Validation** - Input data validation
-- **MySQL** - Relational database
-- **Maven** - Build tool
-- **Lombok** - Reduce boilerplate code
-- **Swagger/OpenAPI** 2.3.0 - API documentation
-- **Thymeleaf** - Template engine
+- **Spring Boot** 3.x
+- **Spring Data JPA** — Database interactions
+- **Spring Security** — HTTP Basic Authentication
+- **Spring Validation** — Input data validation
+- **BCrypt** — Password hashing
+- **Lombok** — Boilerplate reduction
+- **Swagger / OpenAPI** (SpringDoc) — API documentation
+- **Maven** — Build tool
+- **MySQL** — Relational database
+
+**Frontend**
+- **React** (Vite)
+- **React Router**
+- **CSS Modules**
+
+---
 
 ## 📦 Prerequisites
 
@@ -49,7 +71,10 @@ Before running this application, ensure you have the following installed:
 - **JDK** 21
 - **Maven** 3.6+
 - **MySQL** 8.0+
-- **Git** (for cloning the repository)
+- **Node.js** 18+ and **npm**
+- **Git**
+
+---
 
 ## 🚀 Installation & Setup
 
@@ -62,277 +87,320 @@ cd java-junior-interview-task
 
 ### 2. MySQL Database Setup
 
-Create a MySQL database (or it will be created automatically):
-
 ```sql
 CREATE DATABASE java_junior_interview_task;
 ```
 
-### 3. Configure Environment Variables
+The table schema is generated automatically on startup via `spring.jpa.hibernate.ddl-auto=update`.
 
-Set up the following environment variables or configure them in your IDE:
+### 3. Configure `application.properties`
+
+Edit `src/main/resources/application.properties`:
 
 ```properties
-DM_USERNAME=your_mysql_username
-DB_PASSWORD=your_mysql_password
-SECURITY_USERNAME=admin
-SECURITY_PASSWORD=your_secure_password
+spring.datasource.url=jdbc:mysql://localhost:3306/java_junior_interview_task
+spring.datasource.username=YOUR_MYSQL_USERNAME
+spring.datasource.password=YOUR_MYSQL_PASSWORD
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+server.port=8086
 ```
 
-**For Windows (Command Prompt):**
-```cmd
-set DM_USERNAME=root
-set DB_PASSWORD=your_password
-set SECURITY_USERNAME=admin
-set SECURITY_PASSWORD=admin123
-```
+### 4. Frontend Setup
 
-**For Windows (PowerShell):**
-```powershell
-$env:DM_USERNAME="root"
-$env:DB_PASSWORD="your_password"
-$env:SECURITY_USERNAME="admin"
-$env:SECURITY_PASSWORD="admin123"
-```
+The frontend expects the backend running at `http://localhost:8086`.
 
-**For Linux/Mac:**
 ```bash
-export DM_USERNAME=root
-export DB_PASSWORD=your_password
-export SECURITY_USERNAME=admin
-export SECURITY_PASSWORD=admin123
+cd frontend   # or the directory containing package.json
+npm install
 ```
 
-### 4. Database Schema
-
-The application automatically creates the following table on startup (`spring.jpa.hibernate.ddl-auto=update`):
-
-```sql
-CREATE TABLE user (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
-    phone_number VARCHAR(15) NOT NULL UNIQUE,
-    email VARCHAR(255) NOT NULL UNIQUE
-);
-```
+---
 
 ## ▶️ Running the Application
 
-### Using Maven:
+### Backend
 
 ```bash
-# Build the project
-mvn clean install
+./mvnw spring-boot:run
+```
 
-# Run the application
+Or with Maven installed globally:
+
+```bash
 mvn spring-boot:run
 ```
 
-### Using IDE:
+The API starts at **http://localhost:8086**.
 
-1. Open the project in IntelliJ IDEA / Eclipse
-2. Set environment variables for MySQL and Spring Security
-3. Run the main class with `@SpringBootApplication`
+> On first startup, if the database is empty, sample users are automatically loaded from `src/main/resources/sample-users.json`.
 
-The application will start on `http://localhost:8086`
+### Frontend
+
+```bash
+npm run dev
+```
+
+The app starts at **http://localhost:5173**.
+
+---
 
 ## 📖 API Documentation
 
 ### Swagger UI
 
-Once the application is running, access the interactive API documentation at:
-
 ```
 http://localhost:8086/swagger-ui.html
 ```
 
-**Authentication required for Swagger access:**
-- Username: value of `SECURITY_USERNAME`
-- Password: value of `SECURITY_PASSWORD`
-
 ### REST API Endpoints
 
-**Important:** All `/api/**` endpoints require HTTP Basic Authentication!
+> All `/api/users/**` endpoints require **HTTP Basic Authentication** (email + password of a registered account).  
+> `/api/auth/register` and `/api/auth/login` are public.
 
-#### 1. Create User
+---
+
+#### Auth
+
+##### Register
 ```http
-POST /api/users
+POST /api/auth/register
 Content-Type: application/json
-Authorization: Basic <credentials>
 
 {
   "firstName": "John",
   "lastName": "Doe",
-  "phoneNumber": "+1234567890",
+  "dateOfBirth": "1995-06-15",
+  "phoneNumber": "+359888123456",
+  "email": "john.doe@example.com",
+  "password": "secret123"
+}
+
+Response: 200 OK
+{ "message": "User registered successfully" }
+```
+
+##### Login
+```http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "secret123"
+}
+
+Response: 200 OK
+{
+  "id": 1,
+  "firstName": "John",
+  "lastName": "Doe",
+  "dateOfBirth": "1995-06-15",
+  "phoneNumber": "+359888123456",
   "email": "john.doe@example.com"
+}
+```
+
+---
+
+#### Users
+
+##### Create User
+```http
+POST /api/users/create
+Content-Type: application/json
+Authorization: Basic <base64(email:password)>
+
+{
+  "firstName": "Jane",
+  "lastName": "Smith",
+  "dateOfBirth": "1990-03-22",
+  "phoneNumber": "+359877654321",
+  "email": "jane.smith@example.com",
+  "password": "12345678"
 }
 
 Response: 201 Created
-{
-  "firstName": "John",
-  "lastName": "Doe",
-  "phoneNumber": "+1234567890",
-  "email": "john.doe@example.com"
-}
 ```
 
-#### 2. Get User by ID
+##### Get User by ID
 ```http
 GET /api/users/{id}
-Authorization: Basic <credentials>
+Authorization: Basic <base64(email:password)>
 
 Response: 200 OK
 {
-  "firstName": "John",
-  "lastName": "Doe",
-  "phoneNumber": "+1234567890",
-  "email": "john.doe@example.com"
+  "id": 2,
+  "firstName": "Jane",
+  "lastName": "Smith",
+  "dateOfBirth": "1990-03-22",
+  "phoneNumber": "+359877654321",
+  "email": "jane.smith@example.com"
 }
 ```
 
-#### 3. Search Users
+##### Get All Users
 ```http
-GET /api/users/search?term=John
-Authorization: Basic <credentials>
+GET /api/users
+Authorization: Basic <base64(email:password)>
 
 Response: 200 OK
-[
-  {
-    "firstName": "John",
-    "lastName": "Doe",
-    "phoneNumber": "+1234567890",
-    "email": "john.doe@example.com"
-  },
-  {
-    "firstName": "Jane",
-    "lastName": "Johnson",
-    "phoneNumber": "+1234567891",
-    "email": "jane.johnson@example.com"
-  }
-]
+[ { ... }, { ... } ]
 ```
 
-**Note:** Search checks all fields (firstName, lastName, email, phoneNumber) and is case-insensitive.
-
-#### 4. Update User
+##### Search Users (paginated)
 ```http
-PUT /api/users/{id}
+GET /api/users/search?term=smith&page=0&size=5
+Authorization: Basic <base64(email:password)>
+
+Response: 200 OK
+{
+  "content": [ { ... }, { ... } ],
+  "totalPages": 3,
+  "totalElements": 12,
+  "number": 0,
+  "size": 5
+}
+```
+
+Searches across **first name**, **last name**, **email**, and **phone number** (case-insensitive).  
+Results are sorted by **last name** then **date of birth** in ascending order.
+
+##### Update User
+```http
+PUT /api/users/edit/{id}
 Content-Type: application/json
-Authorization: Basic <credentials>
+Authorization: Basic <base64(email:password)>
 
 {
-  "firstName": "John",
+  "firstName": "Jane",
   "lastName": "Smith",
-  "phoneNumber": "+1234567890",
-  "email": "john.smith@example.com"
+  "dateOfBirth": "1990-03-22",
+  "phoneNumber": "+359877000000",
+  "email": "jane.new@example.com"
 }
 
 Response: 200 OK
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "phoneNumber": "+1234567890",
-  "email": "john.smith@example.com"
-}
 ```
 
-#### 5. Delete User
+##### Delete User
 ```http
-DELETE /api/users/{id}
-Authorization: Basic <credentials>
+DELETE /api/users/delete/{id}
+Authorization: Basic <base64(email:password)>
 
 Response: 204 No Content
 ```
 
+---
+
 ### Validation Rules
 
-All fields are required and have the following constraints:
+| Field | Rules |
+|-------|-------|
+| First name | Required, 2–50 characters |
+| Last name | Required, 2–50 characters |
+| Date of birth | Required, must be in the past |
+| Phone number | Required, 7–15 digits, optional `+` prefix, **unique** |
+| Email | Required, valid format, **unique** |
+| Password | Required (min. 6 characters on registration) |
 
-- **firstName**: 2-50 characters
-- **lastName**: 2-50 characters
-- **phoneNumber**: 7-15 digits (may start with +)
-- **email**: Valid email format
-
-### Error Response Example
+### Error Response Examples
 
 ```json
-{
-  "timestamp": "2025-02-08T10:30:00",
-  "status": 400,
-  "error": "Bad Request",
-  "message": "First name must be between 2 and 50 characters",
-  "path": "/api/users"
-}
+{ "email": "Email already in use." }
 ```
+```json
+{ "phoneNumber": "Phone number already in use." }
+```
+```json
+{ "id": "User with id 99 not found." }
+```
+
+---
 
 ## 📁 Project Structure
 
 ```
-src/
-├── main/
-│   ├── java/
-│   │   └── java_junior_interview_task/
-│   │       ├── config/
-│   │       │   └── SecurityConfig.java          # Spring Security configuration
-│   │       └── user/
-│   │           ├── controller/
-│   │           │   └── UserController.java      # REST controller
-│   │           ├── service/
-│   │           │   └── UserService.java         # Business logic
-│   │           ├── repository/
-│   │           │   └── UserRepository.java      # Data access layer
-│   │           ├── entity/
-│   │           │   └── User.java                # JPA Entity
-│   │           ├── dto/
-│   │           │   └── UserDto.java             # Data Transfer Object
-│   │           └── mapper/
-│   │               └── UserMapper.java          # Entity ↔ DTO mapper
-│   └── resources/
-│       └── application.properties               # Application configuration
-└── test/                                         # Test classes
+java-junior-interview-task/
+├── src/main/java/java_junior_interview_task/
+│   ├── config/
+│   │   └── SecurityConfig.java           # Spring Security + CORS
+│   ├── exception/
+│   │   ├── GlobalExceptionHandler.java   # Centralized error handling
+│   │   ├── EmailDuplicateException.java
+│   │   ├── PhoneNumberDuplicateException.java
+│   │   ├── NoUserFoundByIdException.java
+│   │   ├── NoUserFoundByEmailException.java
+│   │   └── IncorrectPasswordException.java
+│   ├── security/
+│   │   └── Authentication.java           # UserDetails implementation
+│   └── user/
+│       ├── controller/
+│       │   ├── AuthController.java       # /api/auth
+│       │   └── UserController.java       # /api/users
+│       ├── dto/
+│       │   ├── LoginRequest.java
+│       │   ├── RegisterRequest.java
+│       │   ├── UserRequestDto.java
+│       │   ├── UserResponseDto.java
+│       │   └── UserEditDto.java
+│       ├── entity/
+│       │   └── User.java
+│       ├── init/
+│       │   └── UserInit.java             # Sample data loader
+│       ├── mapper/
+│       │   └── UserMapper.java
+│       ├── repository/
+│       │   └── UserRepository.java
+│       └── service/
+│           ├── AuthService.java
+│           └── UserService.java
+└── src/main/resources/
+    ├── application.properties
+    └── sample-users.json                 # Seed data
+
+frontend/src/
+├── components/
+│   ├── home/         Home.jsx
+│   ├── login/        Login.jsx
+│   ├── register/     Register.jsx
+│   ├── sidebar/      SideBar.jsx
+│   ├── userCard/     UserCard.jsx
+│   ├── userCreate/   UserCreate.jsx
+│   ├── userDetails/  UserDetails.jsx
+│   ├── userEdit/     UserEdit.jsx
+│   ├── userList/     UserList.jsx
+│   └── userSearch/   UserSearch.jsx
+├── contexts/
+│   └── UserContext.jsx                   # Auth state & login handler
+├── hooks/
+│   └── useUserDelete.js
+└── routes/
+    ├── GuestRoute.jsx                    # Redirects logged-in users
+    └── ProtectedRoute.jsx                # Redirects unauthenticated users
 ```
-
-## 🔒 Security
-
-The application uses **Spring Security** with **HTTP Basic Authentication**:
-
-- All `/api/**` endpoints require authentication
-- Username and password are set via environment variables
-- CSRF protection is disabled for REST API
-
-**Example authentication with curl:**
-```bash
-curl -u admin:admin123 http://localhost:8086/api/users/1
-```
-
-## 🧪 Testing
-
-You can test the API using:
-
-1. **Swagger UI** - `http://localhost:8086/swagger-ui.html`
-2. **Postman** - Import endpoints and add Basic Auth
-3. **curl** - Command line tool
-
-**Example with curl:**
-```bash
-# Create a user
-curl -X POST http://localhost:8086/api/users \
-  -u admin:admin123 \
-  -H "Content-Type: application/json" \
-  -d '{
-    "firstName": "Test",
-    "lastName": "User",
-    "phoneNumber": "+1234567890",
-    "email": "test@example.com"
-  }'
-```
-
-## 👤 Author
-
-**Tihomir Kolew**
-- GitHub: [@tihomirkolew](https://github.com/tihomirkolew)
 
 ---
 
-**Note:** Remember to set environment variables before running the application!
+## 🔒 Security
+
+- All `/api/users/**` endpoints are protected with **HTTP Basic Authentication**
+- Passwords are hashed with **BCrypt** before storage — plain-text passwords are never saved
+- CORS is configured to allow requests from `http://localhost:5173` (the React dev server)
+- CSRF protection is disabled (standard for stateless REST APIs)
+- `/api/auth/register` and `/api/auth/login` are publicly accessible
+
+**Example with curl:**
+```bash
+curl -u john.doe@example.com:secret123 http://localhost:8086/api/users/1
+```
+
+> The API can also be explored interactively via **Swagger UI** at `http://localhost:8086/swagger-ui.html` or through the **React frontend** at `http://localhost:5173`.
+
+---
+
+## 👤 Author
+
+**Tihomir Kolew**  
+GitHub: [@tihomirkolew](https://github.com/tihomirkolew)
